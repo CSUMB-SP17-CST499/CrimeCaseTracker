@@ -2483,24 +2483,6 @@ module.exports =
               { className: 'nav in', id: 'side-menu' },
               _react2.default.createElement(
                 'li',
-                { className: 'sidebar-search' },
-                _react2.default.createElement(
-                  'div',
-                  { className: 'input-group custom-search-form' },
-                  _react2.default.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Search...' }),
-                  _react2.default.createElement(
-                    'span',
-                    { className: 'input-group-btn' },
-                    _react2.default.createElement(
-                      'button',
-                      { className: 'btn btn-default', type: 'button' },
-                      _react2.default.createElement('i', { className: 'fa fa-search' })
-                    )
-                  )
-                )
-              ),
-              _react2.default.createElement(
-                'li',
                 null,
                 _react2.default.createElement(
                   'a',
@@ -2517,9 +2499,67 @@ module.exports =
                 _react2.default.createElement(
                   'a',
                   { href: '', onClick: function onClick(e) {
-                      e.preventDefault();_history2.default.push('/blank');
+                      e.preventDefault();_history2.default.push('/addCase');
                     } },
-                  'Blank'
+                  _react2.default.createElement('i', { className: 'fa fa-edit fa-fw' }),
+                  ' \xA0New Case'
+                )
+              ),
+              _react2.default.createElement(
+                'li',
+                null,
+                _react2.default.createElement(
+                  'a',
+                  { href: '#' },
+                  _react2.default.createElement('i', { className: 'fa fa-bar-chart-o fa-fw' }),
+                  ' Analytics & Reports',
+                  _react2.default.createElement('span', { className: 'fa arrow' })
+                ),
+                _react2.default.createElement(
+                  'ul',
+                  { className: 'nav nav-second-level' },
+                  _react2.default.createElement(
+                    'li',
+                    null,
+                    _react2.default.createElement(
+                      'a',
+                      { href: '#' },
+                      'Request Reports'
+                    )
+                  ),
+                  _react2.default.createElement(
+                    'li',
+                    null,
+                    _react2.default.createElement(
+                      'a',
+                      { href: '#' },
+                      'Similar Cases'
+                    )
+                  )
+                )
+              ),
+              _react2.default.createElement(
+                'li',
+                null,
+                _react2.default.createElement(
+                  'a',
+                  { href: '', onClick: function onClick(e) {
+                      e.preventDefault();_history2.default.push('/advancedSearch');
+                    } },
+                  _react2.default.createElement('i', { className: 'fa fa-search fa-fw' }),
+                  ' \xA0Advanced Search'
+                )
+              ),
+              _react2.default.createElement(
+                'li',
+                null,
+                _react2.default.createElement(
+                  'a',
+                  { href: '', onClick: function onClick(e) {
+                      e.preventDefault();_history2.default.push('/feedback');
+                    } },
+                  _react2.default.createElement('i', { className: 'fa fa-comment-o fa-fw' }),
+                  ' \xA0Give Feedback'
                 )
               ),
               _react2.default.createElement(
