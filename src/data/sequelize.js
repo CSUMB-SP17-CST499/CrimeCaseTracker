@@ -11,6 +11,11 @@ import Sequelize from 'sequelize';
 import { databaseUrl } from '../config';
 
 const sequelize = new Sequelize(databaseUrl, {
+  pool:{
+    max: 20,
+    min: 0,
+    idle: 10000
+  },
   define: {
     freezeTableName: true,
   },
