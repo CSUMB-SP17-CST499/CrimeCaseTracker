@@ -9,7 +9,7 @@ function displayBlank(props, context) {
     <div>
       <div className="row">
         <div className="col-lg-12">
-          <PageHeader>Blank</PageHeader>
+          <PageHeader>Statistics</PageHeader>
         </div>
       </div>
     </div>

@@ -20,20 +20,17 @@
   max-width: var(--max-content-width);
 }
 
-.news {
-  padding: 0;
+input[type=text]{
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    width: 85%;
+    font-size: 16px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    margin-bottom: 12px;
+    margin: 2px;
 }
 
-.newsItem {
-  list-style-type: none;
-  padding-bottom: 6px;
-}
-
-.newsTitle {
-  font-size: 1.125em;
-}
-
-.newsTitle,
-.newsDesc {
-  display: block;
+button{
+    
 }

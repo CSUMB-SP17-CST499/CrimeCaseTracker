@@ -1,1 +1,1 @@
-module.exports = {"main":{"js":"/assets/main.js?85d6304ab24d4568f072"}};
+module.exports = {"main":{"js":"/assets/main.js?13e7a7b7ab6c8a4df422"}};
