@@ -2,6 +2,7 @@
 
 import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import { ModalApp } from '../../../src/components/App/AddNewCase.js';
 import {
   MenuItem,
   DropdownButton,
@@ -36,6 +37,10 @@ function Home(props, context) {
   context.setTitle(title);
   return (
     <div>
+      <div>
+        <h1>TEST MODAL</h1>
+        <ModalApp/>
+      </div>
       <div className="row">
         <div className="col-lg-12">
           <PageHeader>Dashboard</PageHeader>
