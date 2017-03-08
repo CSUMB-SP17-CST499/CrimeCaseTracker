@@ -8,12 +8,21 @@
  */
 
 import Sequelize from 'sequelize';
-import { databaseUrl } from '../config';
+import { databaseUrl, databaseName, databasePass, databasePort, databaseUser } from '../config';
 
-const sequelize = new Sequelize(databaseUrl, {
+const sequelize = new Sequelize(databaseName, databaseUser, databasePass, {
+  host: databaseUrl,
+  port: databasePort,
+  dialect: 'mysql',
+  pool:{
+    max: 20,
+    min: 0,
+    idle: 10000,
+  },
   define: {
     freezeTableName: true,
   },
 });
+
 
 export default sequelize;

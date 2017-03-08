@@ -9,7 +9,7 @@
 
 import { GraphQLList as List } from 'graphql';
 import fetch from '../../core/fetch';
-import NewsItemType from '../types/NewsItemType';
+import NewsItemType from '../templates/types/NewsItemType';
 
 // React.js News Feed (RSS)
 const url = 'http://ajax.googleapis.com/ajax/services/feed/load' +

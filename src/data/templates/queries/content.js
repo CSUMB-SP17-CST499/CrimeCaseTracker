@@ -18,7 +18,7 @@ import {
   GraphQLNonNull as NonNull,
 } from 'graphql';
 
-import ContentType from '../types/ContentType';
+import ContentType from '../templates/types/ContentType';
 
 const md = new MarkdownIt();
 
