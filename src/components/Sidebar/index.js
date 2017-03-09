@@ -33,10 +33,10 @@ class Sidebar extends Component {
               <a href="#"><i className="fa fa-bar-chart-o fa-fw" /> Analytics & Reports<span className="fa arrow" ></span></a>
               <ul className="nav nav-second-level">
                 <li>
-                  <a href="#">Request Reports</a>
+                  <a href="" onClick={(e) => { e.preventDefault(); history.push('/reports'); }}>Request Reports</a>
                 </li>
                 <li>
-                  <a href="#">Similar Cases</a>
+                  <a href="" onClick={(e) => { e.preventDefault(); history.push('/heatmaps'); }}>Heatmaps</a>
                 </li>
               </ul>
             </li>
@@ -47,9 +47,6 @@ class Sidebar extends Component {
             <li>
               <a href="" onClick={(e) => { e.preventDefault(); history.push('/feedback'); }}>
                 <i className="fa fa-comment-o fa-fw" /> &nbsp;Give Feedback</a>
-            </li>
-            <li>
-              <a href="http://www.strapui.com/">Premium React Themes</a>
             </li>
           </ul>
         </div>

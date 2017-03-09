@@ -3,13 +3,13 @@
  */
 
 import React from 'react';
-import Reports from './reports';
+import Heatmaps from './heatmaps';
 
 export default {
-  path: '/reports',
+  path: '/heatmaps',
 
   action() {
-    return <Reports />;
+    return <Heatmaps />;
   },
 
 };
