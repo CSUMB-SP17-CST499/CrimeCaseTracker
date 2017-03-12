@@ -52,7 +52,7 @@ app.use(expressJwt({
   secret: auth.jwt.secret,
   credentialsRequired: false,
   getToken: req => req.cookies.id_token,
-}));
+}).unless({ path: ['/login']}));
 
 //
 // Register API middleware

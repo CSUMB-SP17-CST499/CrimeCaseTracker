@@ -16,54 +16,66 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Login.css';
 import history from '../../core/history';
 
+//import sequelize from '../../data/sequelize';
+
 const title = 'Log In';
 
 
-function submitHandler(e) {
+
+
+class Login extends React.Component {
+  constructor(props, context){
+    context.setTitle(title);
+    super(props, context);
+    
+  }
+  
+  submitHandler(e) {
   e.preventDefault();
+  
   history.push('/');
 }
 
-function Login(props, context) {
-  context.setTitle(title);
-  return (
-    <div className="col-md-4 col-md-offset-4">
-      <div className="text-center">
-        <h1 className="login-brand-text">SB Admin React</h1>
-        <h3 className="text-muted">Created by <a href="http://startreact.com">StartReact.com</a> team</h3>
+  render() {
+    return (
+      <div className="col-md-4 col-md-offset-4">
+        <div className="text-center">
+          <h1 className="login-brand-text">SB Admin React</h1>
+          <h3 className="text-muted">Created by <a href="http://startreact.com">StartReact.com</a> team</h3>
+        </div>
+      
+        <Panel header={<h3>Please Sign In</h3>} className="login-panel">
+        
+          <form role="form" onSubmit={(e) => { this.submitHandler(e); }}>
+            <fieldset>
+              <div className="form-group">
+                <FormControl
+                  type="text"
+                  className="form-control"
+                  placeholder="Username"
+                  name="name"
+                />
+              </div>
+            
+              <div className="form-group">
+                <FormControl
+                  className="form-control"
+                  placeholder="Password"
+                  type="password"
+                  name="password"
+                />
+              </div>
+              <Checkbox label="Remember Me" > Remember Me </Checkbox>
+              <Button type="submit" bsSize="large" bsStyle="success" block>Login</Button>
+            </fieldset>
+          </form>
+      
+        </Panel>
+    
       </div>
-
-      <Panel header={<h3>Please Sign In</h3>} className="login-panel">
-
-        <form role="form" onSubmit={(e) => { submitHandler(e); }}>
-          <fieldset>
-            <div className="form-group">
-              <FormControl
-                type="text"
-                className="form-control"
-                placeholder="Username"
-                name="name"
-              />
-            </div>
-
-            <div className="form-group">
-              <FormControl
-                className="form-control"
-                placeholder="Password"
-                type="password"
-                name="password"
-              />
-            </div>
-            <Checkbox label="Remember Me" > Remember Me </Checkbox>
-            <Button type="submit" bsSize="large" bsStyle="success" block>Login</Button>
-          </fieldset>
-        </form>
-
-      </Panel>
-
-    </div>
-
-  );
+  
+    );
+  }
 }
 
 
