@@ -16,6 +16,7 @@ import login from './login';
 import blank from './dashboardPages/blank';
 import reports from './dashboardPages/reports';
 import heatmaps from './dashboardPages/heatmaps';
+import playground from './dashboardPages/playground'
 import error from './error';
 
 import Header from '../components/Header';
@@ -46,6 +47,7 @@ export default [
       blank,
       reports,
       heatmaps,
+      playground,
       // place new routes before...
       error,
     ],
