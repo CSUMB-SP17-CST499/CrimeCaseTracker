@@ -12,13 +12,22 @@ class Playground extends Component{
     super()
 
     const casesInDB = [];
-
     for(let i = 0; i<10; i++){
       casesInDB.push({
-        caseNumber: {i},
-        crime: {i}
+        caseNumber: i,
+        crime: i*i
       });
     }
+
+
+    casesInDB.push({
+      caseNumber: 123,
+      crime: 111
+    });
+    casesInDB.push({
+      caseNumber: 456,
+      crime: 222
+    });
 
     this.state = { casesInDB };
   }
@@ -28,8 +37,10 @@ class Playground extends Component{
       <div>
         <h1>TYPING WORDS</h1>
         {this.state.casesInDB.map((thing, index) => (
-          <p key={index}>Case Number: {thing.caseNumber}, crime: {thing.crime}</p>
+          <div key={index}>Case Number: {thing.caseNumber}, crime: {thing.crime}</div>
         ))}
+
+
       </div>
     );
   }
