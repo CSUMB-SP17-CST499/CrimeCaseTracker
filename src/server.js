@@ -18,7 +18,9 @@ import sequelize from './data/sequelize';
 import routes from './routes';
 import assets from './assets'; // eslint-disable-line import/no-unresolved
 import { port, auth } from './config';
+
 import morgan from 'morgan';
+import passport from 'passport';
 
 const app = express();
 
@@ -45,6 +47,12 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
+app.use(passport.initialize());
+//
+// Passport Strategies
+// -----------------------------------------------------------------------------
+const localLoginStrategy = require('./data/passport/local-login');
+passport.use('local-login', localLoginStrategy);
 //
 // Authentication
 // -----------------------------------------------------------------------------
@@ -56,7 +64,8 @@ app.use(expressJwt({
     path: ['/login']
     })
 );
-
+const authRoutes = require('./routes/login/auth');
+app.use('/auth', authRoutes);
 //
 // Register API middleware
 // -----------------------------------------------------------------------------
