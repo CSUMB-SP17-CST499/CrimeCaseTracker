@@ -1,5 +1,5 @@
 /* jshint indent: 2 */
-
+var bcrypt = require('bcrypt-nodejs');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('users', {
     active: {
@@ -29,6 +29,12 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     }
   }, {
-    tableName: 'users'
+    tableName: 'users',
+    instanceMethods: {
+      comparePassword: function(password, callback) {
+        bcrypt.compare(password, this.password, callback);
+      },
+    }
+    
   });
 };

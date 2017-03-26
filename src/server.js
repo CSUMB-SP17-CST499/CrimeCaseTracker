@@ -53,6 +53,7 @@ app.use(passport.initialize());
 // -----------------------------------------------------------------------------
 const localLoginStrategy = require('./data/passport/local-login');
 passport.use('local-login', localLoginStrategy);
+
 //
 // Authentication
 // -----------------------------------------------------------------------------
