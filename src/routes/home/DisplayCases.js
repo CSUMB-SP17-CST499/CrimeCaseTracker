@@ -23,7 +23,7 @@ export default class DisplayCases extends Component{
       }
     }
   }
-    
+
   render(){
     return(
     <div>
@@ -39,121 +39,62 @@ export default class DisplayCases extends Component{
           <th>County</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td>Alfreds Futterkiste</td>
-          <td>Germany</td>
-        </tr>
-        <tr>
-          <td>Berglunds snabbkop</td>
-          <td>Sweden</td>
-        </tr>
-        <tr>
-          <td>Island Trading</td>
-          <td>UK</td>
-        </tr>
-        <tr>
-          <td>Koniglich Essen</td>
-          <td>Germany</td>
-        </tr>
-        <tr>
-          <td>Laughing Bacchus Winecellars</td>
-          <td>Canada</td>
-        </tr>
-        <tr>
-          <td>Magazzini Alimentari Riuniti</td>
-          <td>Italy</td>
-        </tr>
-        <tr>
-          <td>North/South</td>
-          <td>UK</td>
-        </tr>
-        <tr>
-          <td>Paris specialites</td>
-          <td>France</td>
-        </tr>
-    </tbody>
+      <CaseData />
       </Table>
     </div>
-      
+
     );
   }
 }
 
 export class CaseData extends Component{
-    
+
   constructor() {
     super()
     this.state = {
       cases: [],
       suspects: [],
-      counties: []
+      counties: [],
+      caseNums: []
     }
   }
   componentDidMount(){
     this.loadFromServer();
   }
-  
+
   loadFromServer(){
-    suspects = ["Alfreds Futterkiste", "Berglunds snabbkop", "Island Trading", "Koniglich Essen", "Laughing Bacchus Winecellars", "Magazzini Alimentari Riuniti", "North/South", "Paris specialites"];
-    counties = ["Germany", "Sweden", "UK", "Germany", "Canada", "Italy", "UK", "France"];
+
+    var N = 8;
+    var tempCases = [];
+    this.state.caseNums = Array.apply(null, {length: N}).map(Number.call, Number);
+    this.state.suspects = ["Alfreds Futterkiste", "Berglunds snabbkop", "Island Trading", "Koniglich Essen", "Laughing Bacchus Winecellars", "Magazzini Alimentari Riuniti", "North/South", "Paris specialites"];
+    this.state.counties = ["Germany", "Sweden", "UK", "Germany", "Canada", "Italy", "UK", "France"];
+
+    for (var i = 0; i < 8; i++) {
+      tempCases.push({
+          id: this.state.caseNums[i],
+          suspect: this.state.suspects[i],
+          county: this.state.counties[i]
+        }
+      );
+    }
+
+    this.setState({cases: tempCases});
+
   }
-    
+
   render(){
+    //this.loadFromServer();
+    let cases = this.state.cases;
+    //console.log(cases);
     return(
-    <div>
-      <input type="text" id="myInput" onKeyUp={()=>this.autoSearch()} placeholder="Search..." title="Type anything"/>
-      <ModalApp />
-      <Table striped bordered condensed hover id="myTable">
-      <thead>
-        <tr>
-          <th>Suspect</th>
-          <th>County</th>
-        </tr>
-      </thead>
       <tbody>
-        <tr>
-          <td>{this.state.suspects[0]}</td>
-          <td>Germany</td>
-        </tr>
-        <tr>
-          <td>Berglunds snabbkop</td>
-          <td>Sweden</td>
-        </tr>
-        <tr>
-          <td>Island Trading</td>
-          <td>UK</td>
-        </tr>
-        <tr>
-          <td>Koniglich Essen</td>
-          <td>Germany</td>
-        </tr>
-        <tr>
-          <td>Laughing Bacchus Winecellars</td>
-          <td>Canada</td>
-        </tr>
-        <tr>
-          <td>Magazzini Alimentari Riuniti</td>
-          <td>Italy</td>
-        </tr>
-        <tr>
-          <td>North/South</td>
-          <td>UK</td>
-        </tr>
-        <tr>
-          <td>Paris specialites</td>
-          <td>France</td>
-        </tr>
-    </tbody>
-      </Table>
-    </div>
-      
+      {cases.map((_case) => {
+        return <tr><td>{_case.suspect}</td><td>{_case.county}</td></tr>
+      })}
+
+      </tbody>
+
     );
   }
-}
-
-export class Case extends Component{
-    render(){
-        <tr></tr>
-    }
 }
