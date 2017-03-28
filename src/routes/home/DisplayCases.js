@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, ButtonToolbar, Table, PageHeader } from 'react-bootstrap';
-import { ModalApp } from './AddNewCase.js'
+import { AddNewCaseButton, SimpleAddCaseModal, CaseRow } from './AddNewCase.js'
 
 export default class DisplayCases extends Component{
   autoSearch(){
@@ -31,7 +31,7 @@ export default class DisplayCases extends Component{
         <PageHeader>Cases</PageHeader>
       </div>
       <input type="text" id="myInput" onKeyUp={()=>this.autoSearch()} placeholder="Search..." title="Type anything"/>
-      <ModalApp />
+      <AddNewCaseButton />
       <Table striped bordered condensed hover id="myTable">
       <thead>
         <tr>
@@ -42,7 +42,6 @@ export default class DisplayCases extends Component{
       <CaseData />
       </Table>
     </div>
-
     );
   }
 }
@@ -63,7 +62,6 @@ export class CaseData extends Component{
   }
 
   loadFromServer(){
-
     var N = 8;
     var tempCases = [];
     this.state.caseNums = Array.apply(null, {length: N}).map(Number.call, Number);
@@ -80,19 +78,15 @@ export class CaseData extends Component{
     }
 
     this.setState({cases: tempCases});
-
   }
 
   render(){
-    //this.loadFromServer();
     let cases = this.state.cases;
-    //console.log(cases);
     return(
       <tbody>
       {cases.map((_case) => {
-        return <tr><td>{_case.suspect}</td><td>{_case.county}</td></tr>
+        return <CaseRow {... _case} />
       })}
-
       </tbody>
 
     );

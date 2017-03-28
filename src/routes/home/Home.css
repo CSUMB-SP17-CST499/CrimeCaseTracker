@@ -32,5 +32,9 @@ input[type=text]{
 }
 
 button{
-    
+
+}
+
+tr{
+  cursor: pointer;
 }
