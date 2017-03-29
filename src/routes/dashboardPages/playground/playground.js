@@ -3,13 +3,13 @@
  */
 
 import React, { Component } from 'react';
-import { PageHeader } from 'react-bootstrap';
+import { PageHeader, Table } from 'react-bootstrap';
 
 const title = 'Playground';
 
 class Playground extends Component{
   constructor(){
-    super()
+    super();
 
     const casesInDB = [];
     for(let i = 0; i<10; i++){
@@ -37,10 +37,23 @@ class Playground extends Component{
       <div>
         <h1>TYPING WORDS</h1>
         {this.state.casesInDB.map((thing, index) => (
-          <div key={index}>Case Number: {thing.caseNumber}, crime: {thing.crime}</div>
+          <div key={index}>
+            <Table striped bordered condensed hover id="myTable">
+              <thead>
+              <tr>
+                <th>Case Number</th>
+                <th>Crime</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td>{thing.caseNumber}</td>
+                <td>{thing.crime}</td>
+              </tr>
+              </tbody>
+            </Table>
+            </div>
         ))}
-
-
       </div>
     );
   }
