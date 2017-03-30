@@ -15,7 +15,7 @@ export const AddCaseModal = React.createClass({
             <label>Report Date:</label>
             <input type="date" className="form-control" name="reportDate"/>
             </div>
-            
+
             <div className="form-group">
             <label>Case Number: </label>
             <input type="text" className="form-control" placeholder="Enter Case #" name="caseNumber"/>
@@ -45,7 +45,7 @@ export const AddCaseModal = React.createClass({
             <select className="form-control" name="reportingDeputy">
             </select>
             </div>
-            
+
             <div className="form-group">
             <label>Checkboxes</label>
             <div className="checkbox">
@@ -59,9 +59,9 @@ export const AddCaseModal = React.createClass({
             </label>
             </div>
             </div>
-            
-            
-            
+
+
+
             </div>
             <div className="col-lg-6">
             <h1>Case Assignment Information</h1>
@@ -91,19 +91,19 @@ export const AddCaseModal = React.createClass({
             <option value="AG Unit" >AG Unit </option>
             </select>
             </div>
-            
+
             <div className="form-group">
             <label for="disabledSelect">Assigned By</label>
             <select id="disabledSelect" className="form-control">
             <option></option>
             </select>
             </div>
-            
+
             <div className="from-group">
             <label>Follow Up Date:</label>
             <input type="date" className="form-control" name="followUpDate"/>
             </div>
-            
+
             <div className="form-group">
             <label>Complaint Action:</label>
             <select className="form-control" name="complaintAction">
@@ -113,7 +113,7 @@ export const AddCaseModal = React.createClass({
             <option value="Other" >Other</option>
             </select>
             </div>
-            
+
             <div className="form-group">
             <label>Property:</label>
             <input type="checkbox" name="property" value="1"/>
@@ -122,8 +122,8 @@ export const AddCaseModal = React.createClass({
             <label>Evidence:</label>
             <input type="checkbox" name="evidence" value="1"/>
             </div>
-            
-            
+
+
             <h2>Siezures</h2>
             <div className="form-group">
             <label>Cash:</label>
@@ -137,13 +137,9 @@ export const AddCaseModal = React.createClass({
             <label>Weapons:</label>
             <input type="checkbox" name="weapons" value="1"/>
             </div>
-            
-            
-            
-            
             </div>
             </div>
-            
+
             <div className="row">
             <div class = "col-md-12">
             <div className="form-group">
@@ -153,6 +149,58 @@ export const AddCaseModal = React.createClass({
             </div>
             </div>
             </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={this.props.onHide}>Close</Button>
+          <Button onClick={this.props.onHide}>Save</Button>
+        </Modal.Footer>
+      </Modal>
+    );
+  }
+});
+
+export const SimpleAddCaseModal = React.createClass({
+  render() {
+    return (
+      <Modal {...this.props} bsSize="large" aria-labelledby="contained-modal-title-lg">
+        <Modal.Body>
+        <div className="panel-body">
+        <div className="row">
+          <div className="col-lg-6">
+            <h3>Report Information</h3>
+            <div className="row">
+              <div className="col-lg-6">
+                <div className="form-group input-group date" id="datetimepicker1"><label>Report Date:</label><input type="date" className="form-control" name="reportDate" /></div>
+              </div>
+              <div className="col-lg-6">
+                <div className="form-group"><label>Case Number: </label><input type="text" className="form-control" placeholder="Enter Case #" name="caseNumber" /></div>
+              </div>
+            </div>
+            <div className="form-group"><label>Crime: </label><input type="text" className="form-control" placeholder="Enter Crime" name="crime" /></div>
+            <div className="form-group"><label>Location: </label><input type="text" className="form-control" placeholder="Enter Location" name="location" /></div>
+          </div>
+          <div className="col-lg-6">
+            <div className="form-group">
+              <div className="form-group">
+                <h3>Involved</h3>
+                <label>Reporting Party: </label><input type="text" className="form-control" placeholder="Enter Reporting Party" name="reportingParty" />
+              </div>
+              <div className="form-group"><label>Victim: </label><input type="text" className="form-control" placeholder="Enter Victim" name="victim" /></div>
+              <div class="form-group"><label>Suspect: </label><input type="text" className="form-control" placeholder="Enter Suspect" name="suspect" /></div>
+            </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <div className="form-group"><label>Summary</label><textarea className="form-control" rows="2" name="summary"></textarea></div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <div className="form-group"><span><label>Property:</label><input type="checkbox" name="property" value="1"/></span><span style={{"padding": "10px;"}}><label>Evidence:</label><input type="checkbox" name="evidence" value="1"/></span></div>
+            </div>
+          </div>
+        </div>
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={this.props.onHide}>Close</Button>
@@ -175,12 +223,12 @@ export const ModalApp = React.createClass({
         <OverlayTrigger placement="left" overlay={
             <Tooltip id="tooltip"><strong>Add new case</strong></Tooltip>}>
           <Button bsStyle="success" onClick={()=>this.setState({ lgShow: true })}>
-        
+
            <span className="glyphicon glyphicon-plus"></span>
         </Button>
         </OverlayTrigger>
 
-        <AddCaseModal show={this.state.lgShow} onHide={lgClose} />
+        <SimpleAddCaseModal show={this.state.lgShow} onHide={lgClose} />
       </div>
     );
   }
