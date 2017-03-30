@@ -60,8 +60,6 @@ export const AddCaseModal = React.createClass({
             </div>
             </div>
 
-
-
             </div>
             <div className="col-lg-6">
             <h1>Case Assignment Information</h1>
@@ -248,6 +246,7 @@ export const CaseRow = React.createClass({
       <tr onClick={()=>this.setState({ lgShow: true })}>
         <td>{this.props.suspect}</td>
         <td>{this.props.county}</td>
+        <td><span className={"glyphicon glyphicon-" + this.props.status}></span> </td>
         <SimpleAddCaseModal {... this.props} show={this.state.lgShow} onHide={lgClose} />
       </tr>
     );

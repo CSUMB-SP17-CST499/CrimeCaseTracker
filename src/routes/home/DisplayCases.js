@@ -54,7 +54,8 @@ export class CaseData extends Component{
       cases: [],
       suspects: [],
       counties: [],
-      caseNums: []
+      caseNums: [],
+      statuses: []
     }
   }
   componentDidMount(){
@@ -67,12 +68,14 @@ export class CaseData extends Component{
     this.state.caseNums = Array.apply(null, {length: N}).map(Number.call, Number);
     this.state.suspects = ["Alfreds Futterkiste", "Berglunds snabbkop", "Island Trading", "Koniglich Essen", "Laughing Bacchus Winecellars", "Magazzini Alimentari Riuniti", "North/South", "Paris specialites"];
     this.state.counties = ["Germany", "Sweden", "UK", "Germany", "Canada", "Italy", "UK", "France"];
+    this.state.statuses = ["exclamation-sign", "exclamation-sign", "exclamation-sign", "envelope", "envelope", "check", "check", "check"];
 
     for (var i = 0; i < 8; i++) {
       tempCases.push({
           id: this.state.caseNums[i],
           suspect: this.state.suspects[i],
-          county: this.state.counties[i]
+          county: this.state.counties[i],
+          status: this.state.statuses[i]
         }
       );
     }
