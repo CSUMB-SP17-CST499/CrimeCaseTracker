@@ -13,8 +13,8 @@ const title = 'Feedback';
 class Feedback extends Component{
   render(){
     return(
-      <div>
-        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfOfULNtRb63ZhO8Rw1ITRUaZpYaE8V4xZGAcHr6jHAeBLkqw/viewform?embedded=true" width="900" height="700" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+      <div className="embed-responsive embed-responsive-16by9">
+        <iframe className="embed-responsive-item" src="https://docs.google.com/forms/d/e/1FAIpQLSfOfULNtRb63ZhO8Rw1ITRUaZpYaE8V4xZGAcHr6jHAeBLkqw/viewform?embedded=true">Loading...</iframe>
       </div>
     );
   }
