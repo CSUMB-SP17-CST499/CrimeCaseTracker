@@ -14,6 +14,7 @@ import App from '../components/App';
 import home from './home';
 import login from './login';
 import blank from './dashboardPages/blank';
+import feedback from './dashboardPages/feedback';
 import reports from './dashboardPages/reports';
 import heatmaps from './dashboardPages/heatmaps';
 import error from './error';
@@ -44,6 +45,7 @@ export default [
     children: [
       home,
       blank,
+      feedback,
       reports,
       heatmaps,
       // place new routes before...
