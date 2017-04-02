@@ -26,22 +26,22 @@ export default class DisplayCases extends Component{
 
   render(){
     return(
-    <div>
-      <div className="col-lg-12">
-        <PageHeader>Cases</PageHeader>
+      <div>
+        <div className="col-lg-12">
+          <PageHeader>Cases</PageHeader>
+        </div>
+        <input type="text" id="myInput" onKeyUp={()=>this.autoSearch()} placeholder="Search..." title="Type anything"/>
+        <AddNewCaseButton />
+        <Table striped bordered condensed hover id="myTable">
+          <thead>
+          <tr>
+            <th>Suspect</th>
+            <th>County</th>
+          </tr>
+          </thead>
+          <CaseData />
+        </Table>
       </div>
-      <input type="text" id="myInput" onKeyUp={()=>this.autoSearch()} placeholder="Search..." title="Type anything"/>
-      <AddNewCaseButton />
-      <Table striped bordered condensed hover id="myTable">
-      <thead>
-        <tr>
-          <th>Suspect</th>
-          <th>County</th>
-        </tr>
-      </thead>
-      <CaseData />
-      </Table>
-    </div>
     );
   }
 }
@@ -83,12 +83,18 @@ export class CaseData extends Component{
     this.setState({cases: tempCases});
   }
 
+  updateCase(id){
+    //update case at index
+    console.log("updating case: " + id);
+  }
+
   render(){
     let cases = this.state.cases;
+    let update = (id) => this.updateCase(id);
     return(
       <tbody>
       {cases.map((_case) => {
-        return <CaseRow {... _case} />
+        return <CaseRow {... _case} update={update} />
       })}
       </tbody>
 
