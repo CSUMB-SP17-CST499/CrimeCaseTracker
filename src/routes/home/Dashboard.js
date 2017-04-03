@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Button, ButtonToolbar, Table, PageHeader } from 'react-bootstrap';
-import { AddNewCaseButton, SimpleAddCaseModal, CaseRow } from './AddNewCase.js'
+import { AddNewCaseButton, SimpleAddCaseModal, CaseRow } from './EditCases.js'
 
-export default class DisplayCases extends Component{
+export default class Dashboard extends Component{
   autoSearch(){
     var input, filter, table, tr, td, i;
     input = document.getElementById("myInput");
