@@ -171,19 +171,27 @@ export const SimpleAddCaseModal = React.createClass({
     this.setState({changed: true});
     this.setState({[e.target.name]: e.target.value})
   },
+  addNewCase(){
+
+  },
   onSave(){
     //console.log(this.props.onHide);
     this.props.onHide();
-    if (this.state.changed == true){
-      this.props.update({
-          id: this.props.id,
-          suspect: this.state.suspect,
-          location: this.state.location,
-          status: this.state.status
-      }
-
-      );
+    if (this.props.new){
+      this.addNewCase();
     }
+    else{
+      if (this.state.changed == true){
+        this.props.update({
+            id: this.props.id,
+            suspect: this.state.suspect,
+            location: this.state.location,
+            status: this.state.status
+          }
+        );
+      }
+    }
+
   },
   onClose(){
     this.props.onHide();
@@ -245,7 +253,10 @@ export const SimpleAddCaseModal = React.createClass({
 
 export const AddNewCaseButton = React.createClass({
   getInitialState() {
-    return { lgShow: false };
+    return {
+      lgShow: false,
+      new: true
+    };
   },
   render() {
     let lgClose = () => this.setState({ lgShow: false });
@@ -260,7 +271,7 @@ export const AddNewCaseButton = React.createClass({
           </Button>
         </OverlayTrigger>
 
-        <SimpleAddCaseModal show={this.state.lgShow} onHide={lgClose} />
+        <SimpleAddCaseModal {... this.props} show={this.state.lgShow} onHide={lgClose} />
       </div>
     );
   }
@@ -268,7 +279,10 @@ export const AddNewCaseButton = React.createClass({
 
 export const CaseRow = React.createClass({
   getInitialState() {
-    return { lgShow: false };
+    return {
+      lgShow: false,
+      new: false
+    };
   },
   render() {
     let lgClose = () => this.setState({ lgShow: false });

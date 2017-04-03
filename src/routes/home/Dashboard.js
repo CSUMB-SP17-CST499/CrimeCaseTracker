@@ -3,6 +3,29 @@ import { Button, ButtonToolbar, Table, PageHeader } from 'react-bootstrap';
 import { AddNewCaseButton, SimpleAddCaseModal, CaseRow } from './EditCases.js'
 
 export default class Dashboard extends Component{
+  render(){
+    return(
+      <div>
+        <div className="col-lg-12">
+          <PageHeader>Cases</PageHeader>
+        </div>
+        <CaseSearchBox />
+        <AddNewCaseButton />
+        <Table striped bordered condensed hover id="myTable">
+          <thead>
+          <tr>
+            <th>Suspect</th>
+            <th>Location</th>
+          </tr>
+          </thead>
+          <CaseData />
+        </Table>
+      </div>
+    );
+  }
+}
+
+class CaseSearchBox extends Component{
   autoSearch(){
     var input, filter, table, tr, td, i;
     input = document.getElementById("myInput");
@@ -25,23 +48,8 @@ export default class Dashboard extends Component{
   }
 
   render(){
-    return(
-      <div>
-        <div className="col-lg-12">
-          <PageHeader>Cases</PageHeader>
-        </div>
-        <input type="text" id="myInput" onKeyUp={()=>this.autoSearch()} placeholder="Search..." title="Type anything"/>
-        <AddNewCaseButton />
-        <Table striped bordered condensed hover id="myTable">
-          <thead>
-          <tr>
-            <th>Suspect</th>
-            <th>Location</th>
-          </tr>
-          </thead>
-          <CaseData />
-        </Table>
-      </div>
+    return (
+      <input type="text" id="myInput" onKeyUp={()=>this.autoSearch()} placeholder="Search..." />
     );
   }
 }
@@ -81,7 +89,9 @@ export class CaseData extends Component{
 
     this.setState({cases: tempCases});
   }
-
+  addCase(newCase){
+    this.setState({cases: this.state.cases.concat(newCase)});
+  }
   updateCase(newCase){
     //update case at index - directly to AWS server
     console.log("updating case... ");
@@ -89,19 +99,18 @@ export class CaseData extends Component{
     //update case on dashboard
     this.state.cases[newCase.id] = newCase;
     this.setState({cases: this.state.cases});
-
   }
 
   render(){
     let cases = this.state.cases;
-    let update = (id) => this.updateCase(id);
+    let update = (c) => this.updateCase(c);
+    let add = (c) => this.addCase(c);
     return(
       <tbody>
       {cases.map((_case) => {
-        return <CaseRow {... _case} update={update} />
+        return <CaseRow {... _case} update={update} add={add} />
       })}
       </tbody>
-
     );
   }
 }
