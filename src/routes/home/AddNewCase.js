@@ -160,6 +160,9 @@ export const AddCaseModal = React.createClass({
 export const SimpleAddCaseModal = React.createClass({
   getInitialState() {
     return {
+      suspect: this.props.suspect,
+      county: this.props.county,
+      status: this.props.status,
       changed: false
     };
   },
@@ -171,10 +174,19 @@ export const SimpleAddCaseModal = React.createClass({
     //console.log(this.props.onHide);
     this.props.onHide();
     if (this.state.changed == true){
-      //console.log("updating... id: " + this.props.id);
-      this.props.update(this.props.id);
+      this.props.update({
+          id: this.props.id,
+          suspect: this.state.suspect,
+          county: this.state.county
+      }
+
+      );
       this.setState({changed: false});
     }
+  },
+  onClose(){
+    this.props.onHide();
+    this.setState({changed: false});
   },
   render() {
     return (
@@ -194,7 +206,7 @@ export const SimpleAddCaseModal = React.createClass({
                 </div>
                 <div className="form-group"><label>Crime: </label><input type="text" className="form-control" placeholder="Enter Crime" name="crime" /></div>
                 <div className="form-group"><label>Location: </label>
-                  <input type="text" defaultValue={this.props.county} className="form-control" name="location" placeholder="Location" />
+                  <input type="text" onChange={() => this.flagChange()} defaultValue={this.state.county} className="form-control" name="location" placeholder="Location" />
                 </div>
               </div>
               <div className="col-lg-6">
@@ -205,7 +217,7 @@ export const SimpleAddCaseModal = React.createClass({
                   </div>
                   <div className="form-group"><label>Victim: </label><input type="text" className="form-control" placeholder="Enter Victim" name="victim" /></div>
                   <div className="form-group"><label>Suspect: </label>
-                    <input type="text" onChange={() => this.flagChange()} className="form-control" defaultValue={this.props.suspect} placeholder="Enter Suspect" name="suspect" /></div>
+                    <input type="text" onChange={() => this.flagChange()} className="form-control" defaultValue={this.state.suspect} placeholder="Enter Suspect" name="suspect" /></div>
                 </div>
               </div>
             </div>
@@ -222,7 +234,7 @@ export const SimpleAddCaseModal = React.createClass({
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={this.props.onHide}>Close</Button>
+          <Button onClick={() => this.onClose()}>Close</Button>
           <Button onClick={() => this.onSave()}>Save</Button>
         </Modal.Footer>
       </Modal>

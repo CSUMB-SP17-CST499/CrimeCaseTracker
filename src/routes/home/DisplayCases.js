@@ -83,9 +83,12 @@ export class CaseData extends Component{
     this.setState({cases: tempCases});
   }
 
-  updateCase(id){
+  updateCase(newCase){
     //update case at index
-    console.log("updating case: " + id);
+    console.log("updating case: " + newCase.id);
+
+
+
   }
 
   render(){
