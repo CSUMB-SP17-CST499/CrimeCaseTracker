@@ -161,14 +161,15 @@ export const SimpleAddCaseModal = React.createClass({
   getInitialState() {
     return {
       suspect: this.props.suspect,
-      county: this.props.county,
+      location: this.props.location,
       status: this.props.status,
       changed: false
     };
   },
-  flagChange(){
+  handleChange(e){
     console.log("flag changed");
     this.setState({changed: true});
+    this.setState({[e.target.name]: e.target.value})
   },
   onSave(){
     //console.log(this.props.onHide);
@@ -177,16 +178,16 @@ export const SimpleAddCaseModal = React.createClass({
       this.props.update({
           id: this.props.id,
           suspect: this.state.suspect,
-          county: this.state.county
+          location: this.state.location,
+          status: this.state.status
       }
 
       );
-      this.setState({changed: false});
     }
   },
   onClose(){
     this.props.onHide();
-    this.setState({changed: false});
+    this.setState(this.getInitialState());
   },
   render() {
     return (
@@ -206,7 +207,7 @@ export const SimpleAddCaseModal = React.createClass({
                 </div>
                 <div className="form-group"><label>Crime: </label><input type="text" className="form-control" placeholder="Enter Crime" name="crime" /></div>
                 <div className="form-group"><label>Location: </label>
-                  <input type="text" onChange={() => this.flagChange()} defaultValue={this.state.county} className="form-control" name="location" placeholder="Location" />
+                  <input type="text" onChange={this.handleChange} defaultValue={this.state.location} className="form-control" name="location" placeholder="Location" />
                 </div>
               </div>
               <div className="col-lg-6">
@@ -217,7 +218,7 @@ export const SimpleAddCaseModal = React.createClass({
                   </div>
                   <div className="form-group"><label>Victim: </label><input type="text" className="form-control" placeholder="Enter Victim" name="victim" /></div>
                   <div className="form-group"><label>Suspect: </label>
-                    <input type="text" onChange={() => this.flagChange()} className="form-control" defaultValue={this.state.suspect} placeholder="Enter Suspect" name="suspect" /></div>
+                    <input type="text" onChange={this.handleChange} className="form-control" defaultValue={this.state.suspect} placeholder="Enter Suspect" name="suspect" /></div>
                 </div>
               </div>
             </div>
@@ -275,7 +276,7 @@ export const CaseRow = React.createClass({
     return (
       <tr onClick={()=>this.setState({ lgShow: true })}>
         <td>{this.props.suspect}</td>
-        <td>{this.props.county}</td>
+        <td>{this.props.location}</td>
         <td><span className={"glyphicon glyphicon-" + this.props.status}></span> </td>
         <SimpleAddCaseModal {... this.props} show={this.state.lgShow} onHide={lgClose} />
       </tr>

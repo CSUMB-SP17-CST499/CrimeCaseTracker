@@ -36,7 +36,7 @@ export default class DisplayCases extends Component{
           <thead>
           <tr>
             <th>Suspect</th>
-            <th>County</th>
+            <th>Location</th>
           </tr>
           </thead>
           <CaseData />
@@ -47,13 +47,12 @@ export default class DisplayCases extends Component{
 }
 
 export class CaseData extends Component{
-
   constructor() {
     super()
     this.state = {
       cases: [],
       suspects: [],
-      counties: [],
+      locations: [],
       caseNums: [],
       statuses: []
     }
@@ -67,14 +66,14 @@ export class CaseData extends Component{
     var tempCases = [];
     this.state.caseNums = Array.apply(null, {length: N}).map(Number.call, Number);
     this.state.suspects = ["Alfreds Futterkiste", "Berglunds snabbkop", "Island Trading", "Koniglich Essen", "Laughing Bacchus Winecellars", "Magazzini Alimentari Riuniti", "North/South", "Paris specialites"];
-    this.state.counties = ["Germany", "Sweden", "UK", "Germany", "Canada", "Italy", "UK", "France"];
+    this.state.locations = ["Germany", "Sweden", "UK", "Germany", "Canada", "Italy", "UK", "France"];
     this.state.statuses = ["exclamation-sign", "exclamation-sign", "exclamation-sign", "envelope", "envelope", "check", "check", "check"];
 
     for (var i = 0; i < 8; i++) {
       tempCases.push({
           id: this.state.caseNums[i],
           suspect: this.state.suspects[i],
-          county: this.state.counties[i],
+          location: this.state.locations[i],
           status: this.state.statuses[i]
         }
       );
@@ -84,10 +83,12 @@ export class CaseData extends Component{
   }
 
   updateCase(newCase){
-    //update case at index
-    console.log("updating case: " + newCase.id);
+    //update case at index - directly to AWS server
+    console.log("updating case... ");
 
-
+    //update case on dashboard
+    this.state.cases[newCase.id] = newCase;
+    this.setState({cases: this.state.cases});
 
   }
 
