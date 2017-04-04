@@ -60,8 +60,6 @@ export const AddCaseModal = React.createClass({
             </div>
             </div>
 
-
-
             </div>
             <div className="col-lg-6">
             <h1>Case Assignment Information</h1>
@@ -177,7 +175,9 @@ export const SimpleAddCaseModal = React.createClass({
               </div>
             </div>
             <div className="form-group"><label>Crime: </label><input type="text" className="form-control" placeholder="Enter Crime" name="crime" /></div>
-            <div className="form-group"><label>Location: </label><input type="text" className="form-control" placeholder="Enter Location" name="location" /></div>
+            <div className="form-group"><label>Location: </label>
+              <input type="text" defaultValue={this.props.county} className="form-control" name="location" placeholder="Location" />
+            </div>
           </div>
           <div className="col-lg-6">
             <div className="form-group">
@@ -186,7 +186,8 @@ export const SimpleAddCaseModal = React.createClass({
                 <label>Reporting Party: </label><input type="text" className="form-control" placeholder="Enter Reporting Party" name="reportingParty" />
               </div>
               <div className="form-group"><label>Victim: </label><input type="text" className="form-control" placeholder="Enter Victim" name="victim" /></div>
-              <div class="form-group"><label>Suspect: </label><input type="text" className="form-control" placeholder="Enter Suspect" name="suspect" /></div>
+              <div class="form-group"><label>Suspect: </label>
+                <input type="text" className="form-control" defaultValue={this.props.suspect} placeholder="Enter Suspect" name="suspect" /></div>
             </div>
           </div>
         </div>
@@ -211,7 +212,7 @@ export const SimpleAddCaseModal = React.createClass({
   }
 });
 
-export const ModalApp = React.createClass({
+export const AddNewCaseButton = React.createClass({
   getInitialState() {
     return { smShow: false, lgShow: false };
   },
@@ -234,5 +235,20 @@ export const ModalApp = React.createClass({
   }
 });
 
+export const CaseRow = React.createClass({
+  getInitialState() {
+    return { smShow: false, lgShow: false };
+  },
+  render() {
+    let lgClose = () => this.setState({ lgShow: false });
 
-//ReactDOM.render(<ModalApp/>, document.getElementById('mountNode'));
+    return (
+      <tr onClick={()=>this.setState({ lgShow: true })}>
+        <td>{this.props.suspect}</td>
+        <td>{this.props.county}</td>
+        <td><span className={"glyphicon glyphicon-" + this.props.status}></span> </td>
+        <SimpleAddCaseModal {... this.props} show={this.state.lgShow} onHide={lgClose} />
+      </tr>
+    );
+  }
+});
