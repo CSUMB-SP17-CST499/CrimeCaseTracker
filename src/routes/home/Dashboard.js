@@ -3,7 +3,53 @@ import { Button, ButtonToolbar, Table, PageHeader } from 'react-bootstrap';
 import { AddNewCaseButton, SimpleAddCaseModal, CaseRow } from './EditCases.js'
 
 export default class Dashboard extends Component{
+  constructor() {
+    super()
+    this.state = {
+      cases: [],
+      suspects: [],
+      locations: [],
+      caseNums: [],
+      statuses: []
+    }
+  }
+  componentDidMount(){
+    this.loadFromServer();
+  }
+  loadFromServer(){
+    var N = 8;
+    var tempCases = [];
+    this.state.caseNums = Array.apply(null, {length: N}).map(Number.call, Number);
+    this.state.suspects = ["Alfreds Futterkiste", "Berglunds snabbkop", "Island Trading", "Koniglich Essen", "Laughing Bacchus Winecellars", "Magazzini Alimentari Riuniti", "North/South", "Paris specialites"];
+    this.state.locations = ["Germany", "Sweden", "UK", "Germany", "Canada", "Italy", "UK", "France"];
+    this.state.statuses = ["exclamation-sign", "exclamation-sign", "exclamation-sign", "envelope", "envelope", "check", "check", "check"];
+
+    for (var i = 0; i < 8; i++) {
+      tempCases.push({
+          id: this.state.caseNums[i],
+          suspect: this.state.suspects[i],
+          location: this.state.locations[i],
+          status: this.state.statuses[i]
+        }
+      );
+    }
+
+    this.setState({cases: tempCases});
+  }
+  addCase(newCase){
+    this.setState({cases: this.state.cases.concat(newCase)});
+  }
+  updateCase(newCase){
+    //update case at index - directly to AWS server
+    console.log("updating case... ");
+
+    //update case on dashboard
+    this.state.cases[newCase.id] = newCase;
+    this.setState({cases: this.state.cases});
+  }
   render(){
+    console.log("cases @ render");
+    console.log(this.state.cases);
     return(
       <div>
         <div className="col-lg-12">
@@ -18,7 +64,7 @@ export default class Dashboard extends Component{
             <th>Location</th>
           </tr>
           </thead>
-          <CaseData />
+          <CaseData cases={this.state.cases} />
         </Table>
       </div>
     );
@@ -58,49 +104,26 @@ export class CaseData extends Component{
   constructor() {
     super()
     this.state = {
-      cases: [],
-      suspects: [],
-      locations: [],
-      caseNums: [],
-      statuses: []
+      cases: []
     }
   }
-  componentDidMount(){
-    this.loadFromServer();
-  }
-
-  loadFromServer(){
-    var N = 8;
-    var tempCases = [];
-    this.state.caseNums = Array.apply(null, {length: N}).map(Number.call, Number);
-    this.state.suspects = ["Alfreds Futterkiste", "Berglunds snabbkop", "Island Trading", "Koniglich Essen", "Laughing Bacchus Winecellars", "Magazzini Alimentari Riuniti", "North/South", "Paris specialites"];
-    this.state.locations = ["Germany", "Sweden", "UK", "Germany", "Canada", "Italy", "UK", "France"];
-    this.state.statuses = ["exclamation-sign", "exclamation-sign", "exclamation-sign", "envelope", "envelope", "check", "check", "check"];
-
-    for (var i = 0; i < 8; i++) {
-      tempCases.push({
-          id: this.state.caseNums[i],
-          suspect: this.state.suspects[i],
-          location: this.state.locations[i],
-          status: this.state.statuses[i]
-        }
-      );
-    }
-
-    this.setState({cases: tempCases});
+  componentWillRecieveProps(newProps){
+    this.setState({cases: newProps.cases});
   }
   addCase(newCase){
     this.setState({cases: this.state.cases.concat(newCase)});
   }
   updateCase(newCase){
-    //update case at index - directly to AWS server
+    //update AND retrieve case at index - directly to/from AWS server
     console.log("updating case... ");
 
     //update case on dashboard
     this.state.cases[newCase.id] = newCase;
     this.setState({cases: this.state.cases});
   }
-
+  componentWillReceiveProps(newProps) {
+    this.setState({cases: newProps.cases});
+  }
   render(){
     let cases = this.state.cases;
     let update = (c) => this.updateCase(c);
