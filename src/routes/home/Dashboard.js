@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, ButtonToolbar, Table, PageHeader } from 'react-bootstrap';
-import { AddNewCaseButton, SimpleAddCaseModal, CaseRow } from './EditCases.js'
+import { AddNewCaseButton, CaseRow } from './EditCases.js'
 
 export default class Dashboard extends Component{
   constructor() {
@@ -37,6 +37,9 @@ export default class Dashboard extends Component{
     this.setState({cases: tempCases});
   }
   addCase(newCase){
+    //new case will have last used id + 1, will be changed when "actual" IDs are added
+    newCase.id = this.state.caseNums.length;
+
     this.setState({cases: this.state.cases.concat(newCase)});
   }
   updateCase(newCase){
@@ -48,15 +51,14 @@ export default class Dashboard extends Component{
     this.setState({cases: this.state.cases});
   }
   render(){
-    console.log("cases @ render");
-    console.log(this.state.cases);
+    let add = (c) => this.addCase(c);
     return(
       <div>
         <div className="col-lg-12">
           <PageHeader>Cases</PageHeader>
         </div>
         <CaseSearchBox />
-        <AddNewCaseButton />
+        <AddNewCaseButton add={add} />
         <Table striped bordered condensed hover id="myTable">
           <thead>
           <tr>
@@ -67,35 +69,6 @@ export default class Dashboard extends Component{
           <CaseData cases={this.state.cases} />
         </Table>
       </div>
-    );
-  }
-}
-
-class CaseSearchBox extends Component{
-  autoSearch(){
-    var input, filter, table, tr, td, i;
-    input = document.getElementById("myInput");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("myTable");
-    tr = table.getElementsByTagName("tr");
-    td = [];
-    for (i = 0; i < tr.length; i++) {
-      td[0] = tr[i].getElementsByTagName("td")[0];
-      td[1] = tr[i].getElementsByTagName("td")[1];
-      if (td[0] || td[1]) {
-        if (td[0].innerHTML.toUpperCase().indexOf(filter) > -1
-          || td[1].innerHTML.toUpperCase().indexOf(filter) > -1) {
-          tr[i].style.display = "";
-        } else {
-          tr[i].style.display = "none";
-        }
-      }
-    }
-  }
-
-  render(){
-    return (
-      <input type="text" id="myInput" onKeyUp={()=>this.autoSearch()} placeholder="Search..." />
     );
   }
 }
@@ -131,9 +104,38 @@ export class CaseData extends Component{
     return(
       <tbody>
       {cases.map((_case) => {
-        return <CaseRow {... _case} update={update} add={add} />
+        return <CaseRow {... _case} update={update} />
       })}
       </tbody>
+    );
+  }
+}
+
+class CaseSearchBox extends Component{
+  autoSearch(){
+    var input, filter, table, tr, td, i;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+    td = [];
+    for (i = 0; i < tr.length; i++) {
+      td[0] = tr[i].getElementsByTagName("td")[0];
+      td[1] = tr[i].getElementsByTagName("td")[1];
+      if (td[0] || td[1]) {
+        if (td[0].innerHTML.toUpperCase().indexOf(filter) > -1
+          || td[1].innerHTML.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+
+  render(){
+    return (
+      <input type="text" id="myInput" onKeyUp={()=>this.autoSearch()} placeholder="Search..." />
     );
   }
 }
