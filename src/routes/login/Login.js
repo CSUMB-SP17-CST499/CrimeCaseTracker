@@ -14,8 +14,18 @@ class Login extends React.Component {
     context.setTitle(title);
     super(props, context);
     
+    const storedMessage = localStorage.getItem('successMessage');
+    let successMessage = '';
+    
+    if(storedMessage) {
+      successMessage = storedMessage;
+      localStorage.removeItem('successMessage');
+    }
+    
+    
     this.state = {
       errors: {},
+      successMessage,
       user: {
         username: '',
         password: ''
@@ -45,7 +55,13 @@ class Login extends React.Component {
         this.setState({
           errors: {}
         });
-        console.log('Login form is valid');
+        
+        //Save the token
+        console.log(xhr.response.token);
+        
+        //change the current URL
+        this.context.router.replace('/');
+        
       } else {
         //failure
         
@@ -83,6 +99,7 @@ class Login extends React.Component {
       <LoginForm
         onSubmit={this.processForm}
         onChange={this.changeUser}
+        successMessage={this.state.successMessage}
         errors={this.state.errors}
         user={this.state.user}
       />

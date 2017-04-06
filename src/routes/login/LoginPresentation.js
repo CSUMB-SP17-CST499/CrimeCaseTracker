@@ -13,6 +13,7 @@ const LoginForm =({
   onSubmit,
   onChange,
   errors,
+  successMessage,
   user
 }) => (
       <div className="col-md-4 col-md-offset-4">
@@ -22,6 +23,7 @@ const LoginForm =({
         </div>
         
         <Panel header={<h3>Please Sign In</h3>} className="login-panel">
+          {successMessage && <p className="success-message">{successMessage}</p>}
           {errors.summary && <p className="error-message">{errors.summary}</p>}
           <form role="form" onSubmit={onSubmit}>
             <fieldset>
@@ -61,6 +63,7 @@ LoginForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
+  successMessage: PropTypes.string.isRequired,
   user: PropTypes.object.isRequired
 };
 

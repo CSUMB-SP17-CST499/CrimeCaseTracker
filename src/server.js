@@ -21,6 +21,7 @@ import { port, auth } from './config';
 
 import morgan from 'morgan';
 import passport from 'passport';
+const authCheckMiddleware = require('./middleware/auth-check');
 
 const app = express();
 
@@ -48,6 +49,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 app.use(passport.initialize());
+// app.use('*', authCheckMiddleware).unless({
+//   path: ['/login']
+// });
+
 //
 // Passport Strategies
 // -----------------------------------------------------------------------------

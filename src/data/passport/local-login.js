@@ -1,8 +1,9 @@
-const sequelize = require('sequelize');
 const jwt = require('jsonwebtoken');
-const User = sequelize.import('../models/users');
-const PassportLocalStrategy = require('passport-local').Strategy;
-const config = require('../../config');
+import sequelize from '../sequelize';
+//const sequelize = require('../data/sequelize');
+const User = sequelize.import('../src/data/models/users');
+const PassportLocalStrategy = require('passport').Strategy;
+const auth = require('../../config').auth;
 
 
 /**
@@ -13,7 +14,7 @@ module.exports = new PassportLocalStrategy({
   passwordField: 'password',
   session: false,
   passReqToCallback: true
-}, (req, email, password, done) => {
+}, (req, username, password, done) => {
   const userData = {
     username: username.trim(),
     password: password.trim()
@@ -24,45 +25,31 @@ module.exports = new PassportLocalStrategy({
     where: {
       username: userData.username
     }
-  }).then(function(result){
+  }).then(function(user){
     
-  }).catch(function(err) {
-    return done(err);
-  });
-  
-  
-  return User.findOne({ email: userData.email }, (err, user) => {
-    if (err) { return done(err); }
-    
-    if (!user) {
-      const error = new Error('Incorrect email or password');
-      error.name = 'IncorrectCredentialsError';
-      
-      return done(error);
-    }
-    
-    // check if a hashed user's password is equal to a value saved in the database
+    //Check hashed password
     return user.comparePassword(userData.password, (passwordErr, isMatch) => {
-      if (err) { return done(err); }
-      
-      if (!isMatch) {
+      if(passwordErr) {return done(passwordErr);}
+      if(!isMatch){
         const error = new Error('Incorrect email or password');
         error.name = 'IncorrectCredentialsError';
-        
         return done(error);
       }
       
       const payload = {
-        sub: user._id
+        sub: user.username
       };
       
-      // create a token string
-      const token = jwt.sign(payload, config.jwtSecret);
+      // create token string
+      const token = jwt.sign(payload, auth.jwt.secret);
       const data = {
-        name: user.name
+        name: user.username
       };
       
       return done(null, token, data);
-    });
+    }) ;
+    
+  }).catch(function(err) {
+    return done(err);
   });
 });
