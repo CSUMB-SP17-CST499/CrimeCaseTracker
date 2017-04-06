@@ -2,15 +2,15 @@
  * Created by Brian on 4/3/2017.
  */
 import React from 'react';
-import Advanced from './advanced';
+import AdvancedSearch from './advancedSearch';
 
 export default {
-  path: '/advanced',
+  path: '/advancedSearch',
 
   action() {
     return (
       <div>
-        <Advanced />
+        <AdvancedSearch />
       </div>
     );
   },

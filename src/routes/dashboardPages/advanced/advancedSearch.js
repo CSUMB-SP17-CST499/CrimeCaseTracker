@@ -1,8 +1,12 @@
+/**
+ * Created by Brian on 4/3/2017.
+ */
+
 import React, { Component } from 'react';
 import { Button, ButtonToolbar, Table, PageHeader } from 'react-bootstrap';
 import { AddNewCaseButton, SimpleAddCaseModal, CaseRow } from './EditCases.js'
 
-export default class Dashboard extends Component{
+export default class AdvancedSearch extends Component{
   autoSearch(){
     //Search the cases displayed
     var input, filter, table, tr, td, i;
@@ -106,3 +110,4 @@ export class CaseData extends Component{
     );
   }
 }
+

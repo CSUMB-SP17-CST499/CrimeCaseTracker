@@ -13,6 +13,7 @@ import App from '../components/App';
 // Child routes
 import home from './home';
 import login from './login';
+import advanced from './dashboardPages/advanced';
 import blank from './dashboardPages/blank';
 import reports from './dashboardPages/reports';
 import heatmaps from './dashboardPages/heatmaps';
@@ -43,6 +44,7 @@ export default [
   // keep in mind, routes are evaluated in order
     children: [
       home,
+      advanced,
       blank,
       reports,
       heatmaps,

@@ -1,3 +1,6 @@
+/**
+ * Created by BRX01 on 4/5/2017.
+ */
 import React, { Component } from 'react';
 import { Button, Modal, ButtonToolbar, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import ReactDOM from 'react-dom';
@@ -180,7 +183,7 @@ export const SimpleAddCaseModal = React.createClass({
           suspect: this.state.suspect,
           location: this.state.location,
           status: this.state.status
-      }
+        }
 
       );
     }
