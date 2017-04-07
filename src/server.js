@@ -72,13 +72,11 @@ app.use(expressJwt({
 // Route data request
 // -----------------------------------------------------------------------------
 app.post('/casesModel', function(req, res){
-  console.log('Request to casesModel' + req.body.username);
   Cases.findAll({
     where: {
       assignedTo: req.body.username
     }
   }).then(function(cases){
-    console.log(cases);
     res.json({
       cases: cases
     });

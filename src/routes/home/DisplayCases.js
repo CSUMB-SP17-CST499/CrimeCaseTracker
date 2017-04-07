@@ -81,8 +81,7 @@ export class CaseData extends Component{
         }
       );
     }
-
-    console.log(getUserCases('dude'));
+    
     this.setState({cases: tempCases});
     
   }
