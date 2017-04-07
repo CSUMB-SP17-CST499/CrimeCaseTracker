@@ -2,7 +2,7 @@
 
 import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import DisplayCases from './DisplayCases.js';
+import Dashboard from './Dashboard.js';
 import {
   MenuItem,
   DropdownButton,
@@ -17,7 +17,7 @@ function Home(props, context) {
   context.setTitle(title);
   return (
     <div>
-      <DisplayCases />
+      <Dashboard />
     </div>
   );
 }
