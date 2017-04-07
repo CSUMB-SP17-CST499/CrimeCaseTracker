@@ -82,12 +82,8 @@ export class CaseData extends Component{
       );
     }
 
+    console.log(getUserCases('dude'));
     this.setState({cases: tempCases});
-    getUserCases('dude').then(function(cases){
-      console.log(cases);
-    });
-    console.log('test');
-    //console.log(getUserCases('dude'));
     
   }
 
@@ -95,8 +91,8 @@ export class CaseData extends Component{
     let cases = this.state.cases;
     return(
       <tbody>
-      {cases.map((_case) => {
-        return <CaseRow {... _case} />
+      {cases.map((_case, i) => {
+        return <CaseRow key={i} {... _case} />
       })}
       </tbody>
 

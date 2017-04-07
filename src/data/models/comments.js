@@ -9,7 +9,7 @@ module.exports = function(sequelize, DataTypes) {
       autoIncrement: true
     },
     caseNumber: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(65),
       allowNull: false,
       primaryKey: true,
       references: {
@@ -20,10 +20,10 @@ module.exports = function(sequelize, DataTypes) {
     commentDate: {
       type: DataTypes.TIME,
       allowNull: false,
-      defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
+      defaultValue: 'sequelize.literal(\'CURRENT_TIMESTAMP\')'
     },
     username: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(65),
       allowNull: false,
       primaryKey: true,
       references: {

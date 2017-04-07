@@ -5,27 +5,27 @@ module.exports = function(sequelize, DataTypes) {
     active: {
       type: DataTypes.INTEGER(1),
       allowNull: false,
-      defaultValue: "1"
+      defaultValue: '1'
     },
     username: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(65),
       allowNull: false,
       primaryKey: true
     },
     password: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(65),
       allowNull: false
     },
     lastname: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(65),
       allowNull: false
     },
     firstname: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(65),
       allowNull: false
     },
     rank: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(65),
       allowNull: false
     }
   }, {

@@ -5,20 +5,20 @@ module.exports = function(sequelize, DataTypes) {
     active: {
       type: DataTypes.INTEGER(1),
       allowNull: false,
-      defaultValue: "1"
+      defaultValue: '1'
     },
     reportDate: {
       type: DataTypes.DATE,
       allowNull: false
     },
     caseNumber: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(65),
       allowNull: false,
-      defaultValue: "",
+      defaultValue: '',
       primaryKey: true
     },
     crime: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(65),
       allowNull: false
     },
     location: {
@@ -26,19 +26,19 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     reportingParty: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(65),
       allowNull: false
     },
     victim: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(65),
       allowNull: false
     },
     suspect: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(65),
       allowNull: false
     },
     reportingDeputy: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(65),
       allowNull: false
     },
     flaggedCase: {
@@ -52,22 +52,22 @@ module.exports = function(sequelize, DataTypes) {
     entryDate: {
       type: DataTypes.TIME,
       allowNull: false,
-      defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
+      defaultValue: 'sequelize.literal(\'CURRENT_TIMESTAMP\')'
     },
     status: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(65),
       allowNull: false
     },
     assignedTo: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(65),
       allowNull: false
     },
     unit: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(65),
       allowNull: false
     },
     assignedBy: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(65),
       allowNull: false
     },
     followUpDate: {
@@ -75,7 +75,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     complaintAction: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(65),
       allowNull: false
     },
     property: {
@@ -101,8 +101,13 @@ module.exports = function(sequelize, DataTypes) {
     summary: {
       type: DataTypes.TEXT,
       allowNull: false
+    },
+    city: {
+      type: DataTypes.STRING(65),
+      allowNull: true
     }
   }, {
-    tableName: 'case'
+    tableName: 'case',
+    timestamps: false
   });
 };
