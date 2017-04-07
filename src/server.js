@@ -4,7 +4,6 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import expressJwt from 'express-jwt';
-// import expressGraphQL from 'express-graphql';
 import jwt from 'jsonwebtoken';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
@@ -14,11 +13,10 @@ import Html from './components/Html';
 import { ErrorPageWithoutStyle } from './routes/error/ErrorPage';
 import errorPageStyle from './routes/error/ErrorPage.css';
 import sequelize from './data/sequelize';
-// import models from './data/models';
-// import schema from './data/schema';
 import routes from './routes';
 import assets from './assets'; // eslint-disable-line import/no-unresolved
 import { port, auth } from './config';
+const Cases = sequelize.import('../src/data/models/case');
 
 const app = express();
 
@@ -63,6 +61,27 @@ app.use(expressJwt({
 //   rootValue: { request: req },
 //   pretty: process.env.NODE_ENV !== 'production',
 // })));
+
+//
+// Register server-side rendering middleware
+// -----------------------------------------------------------------------------
+
+// Route data request
+// -----------------------------------------------------------------------------
+app.post('/casesModel', function(req, res){
+  Cases.findAll({
+    where: {
+      assignedTo: req.body.username
+    }
+  }).then(function(cases){
+    res.json({
+      cases: cases
+    });
+  }).catch(function(err){
+    console.log(err);
+    return res.status(401);
+  });
+});
 
 //
 // Register server-side rendering middleware
