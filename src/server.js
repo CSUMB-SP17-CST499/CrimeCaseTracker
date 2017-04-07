@@ -19,6 +19,7 @@ import sequelize from './data/sequelize';
 import routes from './routes';
 import assets from './assets'; // eslint-disable-line import/no-unresolved
 import { port, auth } from './config';
+const Cases = sequelize.import('../src/data/models/case');
 
 const app = express();
 
@@ -63,6 +64,27 @@ app.use(expressJwt({
 //   rootValue: { request: req },
 //   pretty: process.env.NODE_ENV !== 'production',
 // })));
+
+//
+// Register server-side rendering middleware
+// -----------------------------------------------------------------------------
+
+// Route data request
+// -----------------------------------------------------------------------------
+app.post('/casesModel', function(req, res){
+  Cases.findAll({
+    where: {
+      assignedTo: req.body.username
+    }
+  }).then(function(cases){
+    res.json({
+      cases: cases
+    });
+  }).catch(function(err){
+    console.log(err);
+    return res.status(401);
+  });
+});
 
 //
 // Register server-side rendering middleware

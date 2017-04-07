@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Button, ButtonToolbar, Table, PageHeader } from 'react-bootstrap';
 import { AddNewCaseButton, SimpleAddCaseModal, CaseRow } from './AddNewCase.js'
+import getUserCases from '../../public/fetchDB';
+
 
 export default class DisplayCases extends Component{
   autoSearch(){
@@ -79,16 +81,17 @@ export class CaseData extends Component{
         }
       );
     }
-
+    
     this.setState({cases: tempCases});
+    
   }
 
   render(){
     let cases = this.state.cases;
     return(
       <tbody>
-      {cases.map((_case) => {
-        return <CaseRow {... _case} />
+      {cases.map((_case, i) => {
+        return <CaseRow key={i} {... _case} />
       })}
       </tbody>
 
