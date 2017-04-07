@@ -1,7 +1,7 @@
-import 'whatwg-fetch';
+import fetch from '../core/fetch';
 
 module.exports = async function getUserCases(user){
-  return fetch('/userModel', {
+  return fetch('/casesModel', {
     method: 'POST',
     headers: {
       'Accept': 'application/json',

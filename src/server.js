@@ -19,6 +19,7 @@ import sequelize from './data/sequelize';
 import routes from './routes';
 import assets from './assets'; // eslint-disable-line import/no-unresolved
 import { port, auth } from './config';
+const Cases = sequelize.import('../src/data/models/case');
 
 const app = express();
 
@@ -70,8 +71,16 @@ app.use(expressJwt({
 
 // Route data request
 // -----------------------------------------------------------------------------
-app.post('/userModel', function(req, res){
-
+app.post('/casesModel', function(req, res){
+  Cases.findAll({
+    where: {
+      assignedTo: req.username
+    }
+  }).then(function(user){
+    return user;
+  }).catch(function(err){
+    return res.status(401);
+  });
 });
 
 //
