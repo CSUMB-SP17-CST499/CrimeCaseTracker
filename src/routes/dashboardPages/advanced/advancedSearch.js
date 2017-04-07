@@ -18,9 +18,13 @@ export default class AdvancedSearch extends Component{
     for (i = 0; i < tr.length; i++) {
       td[0] = tr[i].getElementsByTagName("td")[0];
       td[1] = tr[i].getElementsByTagName("td")[1];
+      td[2] = tr[i].getElementsByTagName("td")[1];
+      td[3] = tr[i].getElementsByTagName("td")[1];
       if (td[0] || td[1]) {
         if (td[0].innerHTML.toUpperCase().indexOf(filter) > -1
-          || td[1].innerHTML.toUpperCase().indexOf(filter) > -1) {
+          || td[1].innerHTML.toUpperCase().indexOf(filter) > -1
+          || td[2].innerHTML.toUpperCase().indexOf(filter) > -1
+          || td[3].innerHTML.toUpperCase().indexOf(filter) > -1) {
           tr[i].style.display = "";
         } else {
           tr[i].style.display = "none";
@@ -29,6 +33,7 @@ export default class AdvancedSearch extends Component{
     }
   }
 
+  //Render the table. Case Number, Crime, Suspect, Victim
   render(){
     return(
       <div>
@@ -40,8 +45,10 @@ export default class AdvancedSearch extends Component{
         <Table striped bordered condensed hover id="myTable">
           <thead>
           <tr>
+            <th>Case Number</th>
+            <th>Crime</th>
             <th>Suspect</th>
-            <th>Location</th>
+            <th>Victim</th>
           </tr>
           </thead>
           <CaseData />
