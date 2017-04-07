@@ -80,9 +80,6 @@ export class CaseData extends Component{
       cases: []
     }
   }
-  componentWillRecieveProps(newProps){
-    this.setState({cases: newProps.cases});
-  }
   addCase(newCase){
     this.setState({cases: this.state.cases.concat(newCase)});
   }
@@ -103,8 +100,8 @@ export class CaseData extends Component{
     let add = (c) => this.addCase(c);
     return(
       <tbody>
-      {cases.map((_case) => {
-        return <CaseRow {... _case} update={update} />
+      {cases.map((_case, i) => {
+        return <CaseRow key={i} {... _case} update={update} />
       })}
       </tbody>
     );
