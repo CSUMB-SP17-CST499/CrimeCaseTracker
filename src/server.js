@@ -67,6 +67,16 @@ app.use(expressJwt({
 //
 // Register server-side rendering middleware
 // -----------------------------------------------------------------------------
+
+// Route data request
+// -----------------------------------------------------------------------------
+app.post('/userModel', function(req, res){
+
+});
+
+//
+// Register server-side rendering middleware
+// -----------------------------------------------------------------------------
 app.get('*', async (req, res, next) => {
   try {
     let css = new Set();
