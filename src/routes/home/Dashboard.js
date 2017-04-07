@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button, ButtonToolbar, Table, PageHeader } from 'react-bootstrap';
-import { AddNewCaseButton, CaseRow } from './EditCases.js'
+import { AddNewCaseButton, CaseRow } from './EditCases.js';
+import getUserCases from '../../../src/public/fetchDB';
 
 export default class Dashboard extends Component{
   constructor() {
@@ -33,7 +34,9 @@ export default class Dashboard extends Component{
         }
       );
     }
-
+    getUserCases('dude').then((cases) => {
+      console.log(cases);
+    });
     this.setState({cases: tempCases});
   }
   addCase(newCase){
@@ -132,7 +135,7 @@ class CaseSearchBox extends Component{
 
   render(){
     return (
-      <input type="text" id="myInput" onKeyUp={()=>this.autoSearch()} placeholder="Search..." />
+      <input type="text" id="myInput" onKeyUp={() => this.autoSearch()} placeholder="Search..." />
     );
   }
 }
