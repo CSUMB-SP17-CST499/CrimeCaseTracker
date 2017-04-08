@@ -3,7 +3,8 @@
  */
 
 import React, { PropTypes } from 'react';
-import { PageHeader } from 'react-bootstrap';
+import { PageHeader } from 'react-bootstrap'
+import GenerateReports from './GenerateReports'
 
 const title = 'Reports';
 
@@ -15,6 +16,7 @@ function Reports(props, context) {
         <div className="col-lg-12">
           <PageHeader>Reports and Statistics</PageHeader>
         </div>
+        <GenerateReports />
       </div>
     </div>
   );

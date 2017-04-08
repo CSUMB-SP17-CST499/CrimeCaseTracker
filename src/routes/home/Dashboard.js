@@ -57,7 +57,7 @@ export default class Dashboard extends Component{
         <div className="col-lg-12">
           <PageHeader>Cases</PageHeader>
         </div>
-        <CaseSearchBox />
+        <CaseSearchBox id="myTable" />
         <AddNewCaseButton add={add} />
         <Table striped bordered condensed hover id="myTable">
           <thead>
@@ -80,9 +80,6 @@ export class CaseData extends Component{
       cases: []
     }
   }
-  componentWillRecieveProps(newProps){
-    this.setState({cases: newProps.cases});
-  }
   addCase(newCase){
     this.setState({cases: this.state.cases.concat(newCase)});
   }
@@ -103,7 +100,7 @@ export class CaseData extends Component{
     let add = (c) => this.addCase(c);
     return(
       <tbody>
-      {cases.map((_case) => {
+      {cases.map((_case, i) => {
         return <CaseRow {... _case} update={update} />
       })}
       </tbody>
@@ -116,7 +113,7 @@ class CaseSearchBox extends Component{
     var input, filter, table, tr, td, i;
     input = document.getElementById("myInput");
     filter = input.value.toUpperCase();
-    table = document.getElementById("myTable");
+    table = document.getElementById(this.props.id);
     tr = table.getElementsByTagName("tr");
     td = [];
     for (i = 0; i < tr.length; i++) {
