@@ -164,8 +164,11 @@ export const SimpleAddCaseModal = React.createClass({
   getInitialState() {
     return {
       suspect: this.props.suspect,
+      id: this.props.id,
+      crime: this.props.crime,
       location: this.props.location,
       status: this.props.status,
+      victim: this.props.victim,
       changed: false
     };
   },
@@ -205,10 +208,12 @@ export const SimpleAddCaseModal = React.createClass({
                     <div className="form-group input-group date" id="datetimepicker1"><label>Report Date:</label><input type="date" className="form-control" name="reportDate" /></div>
                   </div>
                   <div className="col-lg-6">
-                    <div className="form-group"><label>Case Number: </label><input type="text" className="form-control" placeholder="Enter Case #" name="caseNumber" /></div>
+                    <div className="form-group"><label>Case Number: </label>
+                      <input type="text" onChange={this.handleChange} className="form-control" defaultValue={this.props.id} placeholder="Enter Case #" name="caseNumber" /></div>
                   </div>
                 </div>
-                <div className="form-group"><label>Crime: </label><input type="text" className="form-control" placeholder="Enter Crime" name="crime" /></div>
+                <div className="form-group"><label>Crime: </label>
+                  <input onChange={this.handleChange} defaultValue={this.state.crime} type="text" className="form-control" placeholder="Enter Crime" name="crime" /></div>
                 <div className="form-group"><label>Location: </label>
                   <input type="text" onChange={this.handleChange} defaultValue={this.state.location} className="form-control" name="location" placeholder="Location" />
                 </div>
@@ -219,7 +224,8 @@ export const SimpleAddCaseModal = React.createClass({
                     <h3>Involved</h3>
                     <label>Reporting Party: </label><input type="text" className="form-control" placeholder="Enter Reporting Party" name="reportingParty" />
                   </div>
-                  <div className="form-group"><label>Victim: </label><input type="text" className="form-control" placeholder="Enter Victim" name="victim" /></div>
+                  <div className="form-group"><label>Victim: </label>
+                    <input type="text" onChange={this.handleChange} className="form-control" defaultValue={this.state.victim} placeholder="Enter Victim" name="victim" /></div>
                   <div className="form-group"><label>Suspect: </label>
                     <input type="text" onChange={this.handleChange} className="form-control" defaultValue={this.state.suspect} placeholder="Enter Suspect" name="suspect" /></div>
                 </div>
@@ -227,7 +233,8 @@ export const SimpleAddCaseModal = React.createClass({
             </div>
             <div className="row">
               <div className="col-md-12">
-                <div className="form-group"><label>Summary</label><textarea className="form-control" rows="2" name="summary"></textarea></div>
+                <div className="form-group"><label>Summary</label>
+                  <textarea className="form-control" rows="2" name="summary"></textarea></div>
               </div>
             </div>
             <div className="row">
