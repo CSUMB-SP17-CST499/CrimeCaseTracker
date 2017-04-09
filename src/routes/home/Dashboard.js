@@ -98,8 +98,8 @@ export class CaseData extends Component{
     let update = (id) => this.updateCase(id);
     return(
       <tbody>
-      {cases.map((_case) => {
-        return <CaseRow {... _case} update={update} />
+      {cases.map((_case,i) => {
+        return <CaseRow key={i} {... _case} update={update} />
       })}
       </tbody>
 

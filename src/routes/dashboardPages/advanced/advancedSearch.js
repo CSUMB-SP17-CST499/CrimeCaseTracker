@@ -20,11 +20,13 @@ export default class AdvancedSearch extends Component{
       td[1] = tr[i].getElementsByTagName("td")[1];
       td[2] = tr[i].getElementsByTagName("td")[1];
       td[3] = tr[i].getElementsByTagName("td")[1];
+      td[4] = tr[i].getElementsByTagName("td")[1];
       if (td[0] || td[1]) {
         if (td[0].innerHTML.toUpperCase().indexOf(filter) > -1
           || td[1].innerHTML.toUpperCase().indexOf(filter) > -1
           || td[2].innerHTML.toUpperCase().indexOf(filter) > -1
-          || td[3].innerHTML.toUpperCase().indexOf(filter) > -1) {
+          || td[3].innerHTML.toUpperCase().indexOf(filter) > -1
+          || td[4].innerHTML.toUpperCase().indexOf(filter) > -1) {
           tr[i].style.display = "";
         } else {
           tr[i].style.display = "none";
@@ -33,7 +35,7 @@ export default class AdvancedSearch extends Component{
     }
   }
 
-  //Render the table. Case Number, Crime, Suspect, Victim
+  //Render the table. Case Number, Crime, Suspect, Victim, Location
   render(){
     return(
       <div>
@@ -49,6 +51,8 @@ export default class AdvancedSearch extends Component{
             <th>Crime</th>
             <th>Suspect</th>
             <th>Victim</th>
+            <th>Location</th>
+            <th>Status</th>
           </tr>
           </thead>
           <CaseData />
@@ -63,9 +67,11 @@ export class CaseData extends Component{
     super()
     this.state = {
       cases: [],
-      suspects: [],
-      locations: [],
       caseNums: [],
+      crimes: [],
+      suspects: [],
+      victims:[],
+      locations: [],
       statuses: []
     }
   }
@@ -78,7 +84,9 @@ export class CaseData extends Component{
     var tempCases = [];
     this.state.caseNums = Array.apply(null, {length: N}).map(Number.call, Number);
     this.state.suspects = ["Alfreds Futterkiste", "Berglunds snabbkop", "Island Trading", "Koniglich Essen", "Laughing Bacchus Winecellars", "Magazzini Alimentari Riuniti", "North/South", "Paris specialites"];
+    this.state.victims = ["Ernesto L. Cortez", "Alexander Doria", "Chris Ngo", "Brian Rono", "California", "God", "You", "Me"];
     this.state.locations = ["Germany", "Sweden", "UK", "Germany", "Canada", "Italy", "UK", "France"];
+    this.state.crimes = ["084.PC", "123.AB", "234.BC", "345.CD", "456.DE", "567.EF", "678.FG", "789.HI"];
     this.state.statuses = ["exclamation-sign", "exclamation-sign", "exclamation-sign", "envelope", "envelope", "check", "check", "check"];
 
     for (var i = 0; i < 8; i++) {
@@ -86,7 +94,10 @@ export class CaseData extends Component{
           id: this.state.caseNums[i],
           suspect: this.state.suspects[i],
           location: this.state.locations[i],
-          status: this.state.statuses[i]
+          status: this.state.statuses[i],
+          crime: this.state.crimes[i],
+          caseNums: this.state.caseNums[i],
+          victim: this.state.victims[i]
         }
       );
     }

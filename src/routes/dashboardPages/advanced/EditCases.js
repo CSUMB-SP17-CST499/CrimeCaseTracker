@@ -285,12 +285,16 @@ export const CaseRow = React.createClass({
   getInitialState() {
     return { lgShow: false };
   },
+  //Case Number, Crime, Suspect, Victim, Location, Status
   render() {
     let lgClose = () => this.setState({ lgShow: false });
 
     return (
       <tr onClick={()=>this.setState({ lgShow: true })}>
+        <td>{this.props.id}</td>
+        <td>{this.props.crime}</td>
         <td>{this.props.suspect}</td>
+        <td>{this.props.victim}</td>
         <td>{this.props.location}</td>
         <td><span className={"glyphicon glyphicon-" + this.props.status}></span> </td>
         <SimpleAddCaseModal {... this.props} show={this.state.lgShow} onHide={lgClose} />
