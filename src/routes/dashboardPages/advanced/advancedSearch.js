@@ -72,7 +72,8 @@ export class CaseData extends Component{
       suspects: [],
       victims:[],
       locations: [],
-      statuses: []
+      statuses: [],
+      updated: []
     }
   }
   componentDidMount(){
@@ -87,6 +88,7 @@ export class CaseData extends Component{
     this.state.victims = ["Ernesto L. Cortez", "Alexander Doria", "Chris Ngo", "Brian Rono", "California", "God", "You", "Me"];
     this.state.locations = ["Germany", "Sweden", "UK", "Germany", "Canada", "Italy", "UK", "France"];
     this.state.crimes = ["084.PC", "123.AB", "234.BC", "345.CD", "456.DE", "567.EF", "678.FG", "789.HI"];
+    this.state.updated = [true, false, true, false, true, false, true, false];
     this.state.statuses = ["exclamation-sign", "exclamation-sign", "exclamation-sign", "envelope", "envelope", "check", "check", "check"];
 
     for (var i = 0; i < 8; i++) {
@@ -97,6 +99,7 @@ export class CaseData extends Component{
           status: this.state.statuses[i],
           crime: this.state.crimes[i],
           caseNums: this.state.caseNums[i],
+          updated: this.state.updated[i],
           victim: this.state.victims[i]
         }
       );

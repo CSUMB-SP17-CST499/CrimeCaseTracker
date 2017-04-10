@@ -185,7 +185,9 @@ export const SimpleAddCaseModal = React.createClass({
           id: this.props.id,
           suspect: this.state.suspect,
           location: this.state.location,
-          status: this.state.status
+          status: this.state.status,
+          victim: this.state.victim,
+          crime: this.state.crime
         }
 
       );
@@ -290,14 +292,23 @@ export const AddNewCaseButton = React.createClass({
 
 export const CaseRow = React.createClass({
   getInitialState() {
-    return { lgShow: false };
+    return {
+      lgShow: false,
+      updatedCase : true
+    };
   },
+
   //Case Number, Crime, Suspect, Victim, Location, Status
   render() {
     let lgClose = () => this.setState({ lgShow: false });
 
     return (
-      <tr onClick={()=>this.setState({ lgShow: true })}>
+      { updatedCase ? (
+        <tr onClick={()=>this.setState({ lgShow: true })}>
+        ) : (
+        <tr onClick={()=>this.setState({ lgShow: true })}>
+          )}
+
         <td>{this.props.id}</td>
         <td>{this.props.crime}</td>
         <td>{this.props.suspect}</td>
