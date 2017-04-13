@@ -1,28 +1,29 @@
+/**
+ * Created by Red-8 on 4/12/2017.
+ */
 
 
 import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import Dashboard from './Dashboard.js';
+import AdvancedSearch from './advancedSearch.js';
 
-import s from './Home.css';
-const title = 'Cases';
+import s from '../../home/Home.css';
+const title = 'Advanced Search';
 
-function Home(props, context) {
+function Advanced(props, context) {
   context.setTitle(title);
   return (
-    <div>
-      <Dashboard />
-    </div>
+      <AdvancedSearch />
   );
 }
 
-Home.propTypes = {
+Advanced.propTypes = {
   // news: PropTypes.arrayOf(PropTypes.shape({
   //   title: PropTypes.string.isRequired,
   //   link: PropTypes.string.isRequired,
   //   contentSnippet: PropTypes.string,
   // })).isRequired,
 };
-Home.contextTypes = { setTitle: PropTypes.func.isRequired };
+Advanced.contextTypes = { setTitle: PropTypes.func.isRequired };
 
-export default withStyles(s)(Home);
+export default withStyles(s)(Advanced);
