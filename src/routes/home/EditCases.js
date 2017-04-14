@@ -86,13 +86,25 @@ export const SimpleCaseModal = React.createClass({
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={() => this.onClose()}>Close</Button>
-          <Button onClick={() => this.onSave()}>Save</Button>
+          <OverlayTrigger placement="top" overlay={ExitWITHOUTSave}>
+            <Button bsStyle="danger" onClick={() => this.onClose()}>Close</Button>
+          </OverlayTrigger>
+          <OverlayTrigger placement="top" overlay={ExitAndSave}>
+            <Button bsStyle="success" onClick={() => this.onSave()}>Save</Button>
+          </OverlayTrigger>
         </Modal.Footer>
       </Modal>
     );
   }
 });
+
+export const ExitAndSave = (
+  <Tooltip id="tooltip">Exit <strong>AND SAVE</strong>.</Tooltip>
+);
+
+export const ExitWITHOUTSave = (
+  <Tooltip id="tooltip">Exit <strong>WITHOUT</strong> saving.</Tooltip>
+);
 
 export const AddNewCaseButton = React.createClass({
   getInitialState() {

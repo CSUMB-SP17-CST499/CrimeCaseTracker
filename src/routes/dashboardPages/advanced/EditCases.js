@@ -4,6 +4,7 @@
 import React, { Component } from 'react';
 import { Button, Modal, ButtonToolbar, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import ReactDOM from 'react-dom';
+import { ExitAndSave, ExitWITHOUTSave } from '../../home/EditCases';
 
 export const SimpleAddCaseModal = React.createClass({
   getInitialState() {
@@ -104,13 +105,7 @@ export const SimpleAddCaseModal = React.createClass({
   }
 });
 
-export const ExitAndSave = (
-  <Tooltip id="tooltip">Exit <strong>AND SAVE</strong>.</Tooltip>
-);
 
-export const ExitWITHOUTSave = (
-  <Tooltip id="tooltip">Exit <strong>WITHOUT</strong> saving.</Tooltip>
-);
 
 export const AddNewCaseButton = React.createClass({
   getInitialState() {
