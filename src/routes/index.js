@@ -15,6 +15,7 @@ import home from './home';
 import login from './login';
 import advanced from './dashboardPages/advanced';
 import blank from './dashboardPages/blank';
+import feedback from './dashboardPages/feedback';
 import reports from './dashboardPages/reports';
 import heatmaps from './dashboardPages/heatmaps';
 import error from './error';
@@ -46,6 +47,7 @@ export default [
       home,
       advanced,
       blank,
+      feedback,
       reports,
       heatmaps,
       // place new routes before...
