@@ -60,7 +60,7 @@ export default class Dashboard extends Component{
         <div className="col-lg-12">
           <PageHeader>Cases</PageHeader>
         </div>
-        <CaseSearchBox />
+        <CaseSearchBox id="myTable" />
         <AddNewCaseButton add={add} />
         <Table striped bordered condensed hover id="myTable">
           <thead>
@@ -116,7 +116,7 @@ class CaseSearchBox extends Component{
     var input, filter, table, tr, td, i;
     input = document.getElementById("myInput");
     filter = input.value.toUpperCase();
-    table = document.getElementById("myTable");
+    table = document.getElementById(this.props.id);
     tr = table.getElementsByTagName("tr");
     td = [];
     for (i = 0; i < tr.length; i++) {
