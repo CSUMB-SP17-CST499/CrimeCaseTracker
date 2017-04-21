@@ -18,24 +18,25 @@ export default class Dashboard extends Component{
     this.loadFromServer();
   }
   loadFromServer(){
-    var N = 8;
-    var tempCases = [];
-    this.state.caseNums = Array.apply(null, {length: N}).map(Number.call, Number);
-    this.state.suspects = ["Alfreds Futterkiste", "Berglunds snabbkop", "Island Trading", "Koniglich Essen", "Laughing Bacchus Winecellars", "Magazzini Alimentari Riuniti", "North/South", "Paris specialites"];
-    this.state.locations = ["Germany", "Sweden", "UK", "Germany", "Canada", "Italy", "UK", "France"];
-    this.state.statuses = ["exclamation-sign", "exclamation-sign", "exclamation-sign", "envelope", "envelope", "check", "check", "check"];
-
-    for (var i = 0; i < 8; i++) {
-      tempCases.push({
-          id: this.state.caseNums[i],
-          suspect: this.state.suspects[i],
-          location: this.state.locations[i],
-          status: this.state.statuses[i]
-        }
-      );
-    }
+    // var N = 8;
+    // var tempCases = [];
+    // this.state.caseNums = Array.apply(null, {length: N}).map(Number.call, Number);
+    // this.state.suspects = ["Alfreds Futterkiste", "Berglunds snabbkop", "Island Trading", "Koniglich Essen", "Laughing Bacchus Winecellars", "Magazzini Alimentari Riuniti", "North/South", "Paris specialites"];
+    // this.state.locations = ["Germany", "Sweden", "UK", "Germany", "Canada", "Italy", "UK", "France"];
+    // this.state.statuses = ["exclamation-sign", "exclamation-sign", "exclamation-sign", "envelope", "envelope", "check", "check", "check"];
+    //
+    // for (var i = 0; i < 8; i++) {
+    //   tempCases.push({
+    //       id: this.state.caseNums[i],
+    //       suspect: this.state.suspects[i],
+    //       location: this.state.locations[i],
+    //       status: this.state.statuses[i]
+    //     }
+    //   );
+    // }
     getUserCases('dude').then((cases) => {
       console.log(cases);
+      this.setState({cases: cases});
     });
     this.setState({cases: tempCases});
   }
@@ -65,8 +66,12 @@ export default class Dashboard extends Component{
         <Table striped bordered condensed hover id="myTable">
           <thead>
           <tr>
+            <th>Case Number</th>
+            <th>Crime</th>
             <th>Suspect</th>
+            <th>Victim</th>
             <th>Location</th>
+            <th>Status</th>
           </tr>
           </thead>
           <CaseData cases={this.state.cases} />

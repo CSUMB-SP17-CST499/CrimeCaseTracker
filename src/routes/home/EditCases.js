@@ -8,6 +8,11 @@ export const SimpleCaseModal = React.createClass({
       suspect: this.props.suspect,
       location: this.props.location,
       status: this.props.status,
+      caseNumber: this.props.caseNumber,
+      reportingParty: this.props.reportingParty,
+      victim: this.props.victim,
+      crime: this.props.crime,
+      summary: this.props.summary,
       changed: false
     };
   },
@@ -53,10 +58,13 @@ export const SimpleCaseModal = React.createClass({
                     <div className="form-group input-group date" id="datetimepicker1"><label>Report Date:</label><input type="date" className="form-control" name="reportDate" /></div>
                   </div>
                   <div className="col-lg-6">
-                    <div className="form-group"><label>Case Number: </label><input type="text" className="form-control" placeholder="Enter Case #" name="caseNumber" /></div>
+                    <div className="form-group"><label>Case Number: </label>
+                      <input type="text" onChange={this.handleChange} defaultValue={this.state.caseNumber} className="form-control" placeholder="Enter Case #" name="caseNumber" /></div>
                   </div>
                 </div>
-                <div className="form-group"><label>Crime: </label><input type="text" className="form-control" placeholder="Enter Crime" name="crime" /></div>
+                <div className="form-group"><label>Crime: </label>
+                  <input type="text" onChange={this.handleChange} defaultValue={this.state.crime} className="form-control" placeholder="Enter Crime" name="crime" />
+                </div>
                 <div className="form-group"><label>Location: </label>
                   <input type="text" onChange={this.handleChange} defaultValue={this.state.location} className="form-control" name="location" placeholder="Location" />
                 </div>
@@ -65,9 +73,11 @@ export const SimpleCaseModal = React.createClass({
                 <div className="form-group">
                   <div className="form-group">
                     <h3>Involved</h3>
-                    <label>Reporting Party: </label><input type="text" className="form-control" placeholder="Enter Reporting Party" name="reportingParty" />
+                    <label>Reporting Party: </label>
+                    <input type="text" onChange={this.handleChange} defaultValue={this.state.reportingParty} className="form-control" placeholder="Enter Reporting Party" name="reportingParty" />
                   </div>
-                  <div className="form-group"><label>Victim: </label><input type="text" className="form-control" placeholder="Enter Victim" name="victim" /></div>
+                  <div className="form-group"><label>Victim: </label>
+                    <input type="text" onChange={this.handleChange} defaultValue={this.state.victim}  className="form-control" placeholder="Enter Victim" name="victim" /></div>
                   <div className="form-group"><label>Suspect: </label>
                     <input type="text" onChange={this.handleChange} className="form-control" defaultValue={this.state.suspect} placeholder="Enter Suspect" name="suspect" /></div>
                 </div>
@@ -75,7 +85,8 @@ export const SimpleCaseModal = React.createClass({
             </div>
             <div className="row">
               <div className="col-md-12">
-                <div className="form-group"><label>Summary</label><textarea className="form-control" rows="2" name="summary"></textarea></div>
+                <div className="form-group"><label>Summary</label>
+                  <textarea onChange={this.handleChange} defaultValue={this.state.summary} className="form-control" rows="2" name="summary"></textarea></div>
               </div>
             </div>
             <div className="row">
@@ -144,9 +155,13 @@ export const CaseRow = React.createClass({
 
     return (
       <tr onClick={()=>this.setState({ lgShow: true })}>
+        <td>{this.props.caseNumber}</td>
+        <td>{this.props.crime}</td>
         <td>{this.props.suspect}</td>
+        <td>{this.props.victim}</td>
         <td>{this.props.location}</td>
-        <td><span className={"glyphicon glyphicon-" + this.props.status}></span> </td>
+        <td>{this.props.status}</td>
+        {/*<td><span className={"glyphicon glyphicon-" + this.props.status}></span> </td>*/}
         <SimpleCaseModal {... this.props} show={this.state.lgShow} onHide={lgClose} />
       </tr>
     );
