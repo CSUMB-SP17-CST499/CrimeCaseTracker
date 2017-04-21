@@ -18,8 +18,10 @@ export const SimpleAddCaseModal = React.createClass({
       changed: false
     };
   },
+  componentWillReceiveProps(){
+    //console.log("here");
+  },
   handleChange(e){
-    console.log("flag changed");
     this.setState({changed: true});
     this.setState({[e.target.name]: e.target.value})
   },
@@ -28,14 +30,13 @@ export const SimpleAddCaseModal = React.createClass({
     this.props.onHide();
     if (this.state.changed == true){
       this.props.update({
-          id: this.props.id,
+          id: this.props.key,
           suspect: this.state.suspect,
           location: this.state.location,
           status: this.state.status,
           victim: this.state.victim,
           crime: this.state.crime
         }
-
       );
     }
   },
@@ -44,6 +45,7 @@ export const SimpleAddCaseModal = React.createClass({
     this.setState(this.getInitialState());
   },
   render() {
+    console.log("here");
     return (
       <Modal {...this.props} bsSize="large" aria-labelledby="contained-modal-title-lg">
         <Modal.Body>
@@ -105,8 +107,6 @@ export const SimpleAddCaseModal = React.createClass({
   }
 });
 
-
-
 export const AddNewCaseButton = React.createClass({
   getInitialState() {
     return { lgShow: false };
@@ -137,7 +137,9 @@ export const CaseRow = React.createClass({
       updatedCase : true
     };
   },
-
+  componentWillReceiveProps(){
+    console.log(this.props);
+  },
   //Case Number, Crime, Suspect, Victim, Location, Status
   render() {
     let lgClose = () => this.setState({ lgShow: false });

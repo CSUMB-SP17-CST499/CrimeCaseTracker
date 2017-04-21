@@ -4,7 +4,9 @@ import ReactDOM from 'react-dom';
 
 export const SimpleCaseModal = React.createClass({
   getInitialState() {
+    console.log("key: " + this.props.id);
     return {
+      id: this.props.id,
       suspect: this.props.suspect,
       location: this.props.location,
       status: this.props.status,
@@ -24,10 +26,15 @@ export const SimpleCaseModal = React.createClass({
   onSave(){
     this.props.onHide();
     var newCase = {
-      id: this.props.id,
+      id: this.state.id,
       suspect: this.state.suspect,
       location: this.state.location,
-      status: this.state.status
+      status: this.state.status,
+      caseNumber: this.state.caseNumber,
+      reportingParty: this.state.reportingParty,
+      victim: this.state.victim,
+      crime: this.state.crime,
+      summary: this.state.summary
     };
 
     if (this.props.new){
@@ -38,6 +45,7 @@ export const SimpleCaseModal = React.createClass({
     else{
       if (this.state.changed == true){
         this.props.update(newCase);
+
       }
     }
   },
@@ -287,7 +295,6 @@ export const CaseModal = React.createClass({
                   <label>Evidence:</label>
                   <input type="checkbox" name="evidence" value="1"/>
                 </div>
-
 
                 <h2>Siezures</h2>
                 <div className="form-group">
