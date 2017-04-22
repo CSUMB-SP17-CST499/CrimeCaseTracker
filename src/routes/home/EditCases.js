@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom';
 
 export const SimpleCaseModal = React.createClass({
   getInitialState() {
-    console.log("key: " + this.props.id);
     return {
       id: this.props.id,
       suspect: this.props.suspect,

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, ButtonToolbar, Table, PageHeader } from 'react-bootstrap';
+import { Button, ButtonToolbar, Table, PageHeader, DropdownButton, MenuItem } from 'react-bootstrap';
 import { AddNewCaseButton, CaseRow } from './EditCases.js';
 import getUserCases from '../../../src/public/fetchDB';
 
@@ -7,7 +7,8 @@ export default class Dashboard extends Component{
   constructor() {
     super()
     this.state = {
-      cases: []
+      cases: [],
+      view: "You"
     }
   }
   componentDidMount(){
@@ -19,9 +20,14 @@ export default class Dashboard extends Component{
       this.setState({cases: cases});
     });
   }
+  handleSelect(e){
+    console.log("key: " + e);
+    this.setState({view: e});
+    //console.log("state: " + this.state.view);
+  }
   addCase(newCase){
     //new case will have last used id + 1, will be changed when "actual" IDs are added
-    newCase.id = this.state.caseNums.length;
+    newCase.id = this.state.cases.length;
 
     this.setState({cases: this.state.cases.concat(newCase)});
   }
@@ -38,7 +44,16 @@ export default class Dashboard extends Component{
     return(
       <div>
         <div className="col-lg-12">
-          <PageHeader>Cases</PageHeader>
+          <PageHeader>
+            Cases
+            <DropdownButton onSelect={(e) => this.handleSelect(e)} style={{"margin": "10px"}} bsStyle={"info"} title={this.state.view}  >
+              <MenuItem eventKey="You">You</MenuItem>
+              <MenuItem divider />
+              <MenuItem eventKey="Closed">Closed</MenuItem>
+              <MenuItem eventKey="All">All</MenuItem>
+            </DropdownButton>
+          </PageHeader>
+
         </div>
         <CaseSearchBox id="myTable" />
         <AddNewCaseButton add={add} />
