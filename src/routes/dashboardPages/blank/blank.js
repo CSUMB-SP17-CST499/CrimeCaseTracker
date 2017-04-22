@@ -1,5 +1,7 @@
 import React, { PropTypes } from 'react';
 import { PageHeader } from 'react-bootstrap';
+import AutocompleteJS from 'react-google-autocomplete';
+import AutoCompleteJS from "./AutoCompleteJS";
 
 const title = 'Blank';
 
@@ -10,6 +12,7 @@ function displayBlank(props, context) {
       <div className="row">
         <div className="col-lg-12">
           <PageHeader>Statistics</PageHeader>
+          <AutoCompleteJS/>
         </div>
       </div>
     </div>
