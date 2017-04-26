@@ -71,6 +71,8 @@ table(murders)
 
 ```
 
+
+
 ```{r}
 ## Splitting location into latitude and longitude
 dat = dat %>% extract(Location, c("Latitude", "Longitude"), "\\(([^,]+), ([^)]+)\\)")
@@ -78,36 +80,89 @@ dat$Longitude <- round(as.numeric(dat$Longitude), 2)
 dat$Latitude <- round(as.numeric(dat$Latitude), 2)
 ```
 
-```{r}
-monterey = get_map(location= "monterey county", zoom = 9)
-ggmap(monterey)
-```
-
 
 ```{r}
-## generating heat map
+## generating heat map 
 sf = get_map(location= "san francisco", zoom = 13)
 ggmap(sf)
+
 
 locationCrimes = as.data.frame(table(dat$Longitude, dat$Latitude))
 names(locationCrimes) = c("long", "lat", "Frequency")
 locationCrimes$long = as.numeric(as.character(locationCrimes$long))
 locationCrimes$lat = as.numeric(as.character(locationCrimes$lat))
 
-ggmap(sf) + geom_tile(data=locationCrimes, aes(x = long, y = lat, alpha = Frequency),                       fill = "red") + theme(axis.title.y = element_blank(), 
-                                            axis.title.x = element_blank())
+ggmap(sf) + geom_tile(data=locationCrimes, aes(x = long, y = lat, alpha = Frequency), 
+                      fill = "red") + theme(axis.title.y = element_text(), 
+                                            axis.title.x = element_text())
 
 
 ```
 
+```{r}
+times = dat$Time
+dat$Hour = substr(times, 1, 2)
+
+locationCrimesDay = as.data.frame(table(dat$Longitude[dat$Time<17], 
+                                    dat$Latitude[dat$Time<17]))
+
+names(locationCrimesDay) = c("long", "lat", "Frequency")
+locationCrimesDay$long = as.numeric(as.character(locationCrimesDay$long))
+locationCrimesDay$lat = as.numeric(as.character(locationCrimesDay$lat))
 
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+ggmap(sf) + geom_tile(data=locationCrimesDay, aes(x = long, y = lat, alpha = Frequency),
+                            fill = "red") + theme(axis.title.y = element_text(), 
+                                                  axis.title.x = element_text())
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+```{r}
+locationCrimesNight = as.data.frame(table(dat$Longitude[dat$Hour>17], 
+                                          dat$Latitude[dat$Hour>17]))
+
+names(locationCrimesNight) = c("long", "lat", "Frequency")
+locationCrimesNight$long = as.numeric(as.character(locationCrimesNight$long))
+locationCrimesNight$lat = as.numeric(as.character(locationCrimesNight$lat))
+
+ggmap(sf) + geom_tile(data=locationCrimesNight, aes(x = long, y = lat, alpha = Frequency), 
+                      fill = "red") + theme(axis.title.y = element_text(), 
+                                            axis.title.x = element_text())
+
+```
+
+```{r Reading in data from Database}
+myQuery1 = "SELECT * from `Monterey_Pub`;"
+dat1 = dbGetQuery(dbConn, myQuery1)
+data.frame(dat1)
+
+summary(dat1)
+str(dat1)
+```
+
+
+```{r}
+dat1 = dat1 %>% extract(location, c("Latitude", "Longitude"), "\\(([^,]+), ([^)]+)\\)")
+dat1$longitude = round(as.numeric(dat1$longitude), 2)
+dat1$latitude = round(as.numeric(dat1$latitude), 2)
+
+dat1$longitude["longitude"==0] = NA
+dat1$latitude["latitude"==0] = NA
+
+
+montereyCrimes = as.data.frame(table(dat1$latitude, dat1$longitude))
+
+names(montereyCrimes) = c("long", "lat", "Frequency")
+```
+
+
+
+```{r}
+monterey = get_map(location= "monterey county", zoom = 9)
+ggmap(monterey)
+
+ggmap(monterey) + geom_tile(data=montereyCrimes, aes(x = long, y = lat, alpha = Frequency), 
+                      fill = "red") + theme(axis.title.y = element_text(), 
+                                            axis.title.x = element_text())
+```
+
