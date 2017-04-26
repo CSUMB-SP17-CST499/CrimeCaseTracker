@@ -16,34 +16,89 @@ This is an R Markdown document. Markdown is a simple formatting syntax for autho
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
 ```{r Require Casetrack source file}
-require("Casetrack_R.R")
+#source("Casetrack_R.R")
+library(RMySQL)
+library(dbConnect)
+library(ggplot2)
+library(ggmap)
+library(dplyr)
+library(tidyr)
+library(maps)
 
+
+#loading the database
+dbConn = dbConnect(MySQL(), 
+                   user='crimecasetracker', 
+                   password='csumbletmein1234', 
+                   dbname='crimecasedb', 
+                   host='rds-mysql-cct.cramx5hfqqwd.us-west-1.rds.amazonaws.com',
+                   port=3306)
+
+dbListTables(dbConn)
 ```
 
 
 ```{r Selecting all data from Casetrack Table}
-myQuery = "SELECT * from `Casetrack`;"
+myQuery = "SELECT * from `SFDUMMY`;"
 dat = dbGetQuery(dbConn, myQuery)
 data.frame(dat)
 
 summary(dat)
-
+str(dat)
 ```
 
 
 ```{r Find Crimes by Keywords}
 comments = dat$Comments
 
-type = c("mj", "stab", "gun")
-amount[1] = sum(table(grep("marijuana|pot", comments)))
+type = c("drugs", "stab", "gun")
+amount[1] = sum(table(grep("marijuana|pot|narcotics|drug|meth|pills", comments)))
 amount[2] = sum(table(grep("stab|knife", comments)))
 amount[3] = sum(table(grep("shot|shoot|gun", comments)))
 
 crime.type = data.frame(type, amount)
+barplot(crime.type$amount, horiz=TRUE, las=1, xlab="Amount of Crimes")
+```
+
+```{r}
+table(dat$`Ag Crime`[dat$`Ag Crime`=="FALSE"])
+```
+
+# Crimes... Look for crimes by area
+```{r}
+murders = dat$Crime
+table(murders)
 
 ```
 
+```{r}
+## Splitting location into latitude and longitude
+dat = dat %>% extract(Location, c("Latitude", "Longitude"), "\\(([^,]+), ([^)]+)\\)")
+dat$Longitude <- round(as.numeric(dat$Longitude), 2)
+dat$Latitude <- round(as.numeric(dat$Latitude), 2)
+```
 
+```{r}
+monterey = get_map(location= "monterey county", zoom = 9)
+ggmap(monterey)
+```
+
+
+```{r}
+## generating heat map
+sf = get_map(location= "san francisco", zoom = 13)
+ggmap(sf)
+
+locationCrimes = as.data.frame(table(dat$Longitude, dat$Latitude))
+names(locationCrimes) = c("long", "lat", "Frequency")
+locationCrimes$long = as.numeric(as.character(locationCrimes$long))
+locationCrimes$lat = as.numeric(as.character(locationCrimes$lat))
+
+ggmap(sf) + geom_tile(data=locationCrimes, aes(x = long, y = lat, alpha = Frequency),                       fill = "red") + theme(axis.title.y = element_blank(), 
+                                            axis.title.x = element_blank())
+
+
+```
 
 
 

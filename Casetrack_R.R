@@ -1,7 +1,11 @@
 library(RMySQL)
 library(dbConnect)
 library(ggplot2)
+library(ggmap)
 library(dplyr)
+library(tidyr)
+library(maps)
+
 
 #loading the database
 dbConn = dbConnect(MySQL(), 
