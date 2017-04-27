@@ -21,7 +21,6 @@ export default class Dashboard extends Component{
     });
   }
   handleSelect(e){
-    console.log("key: " + e);
     this.setState({view: e});
     //console.log("state: " + this.state.view);
   }
@@ -44,7 +43,7 @@ export default class Dashboard extends Component{
     return(
       <div>
         <div className="col-lg-12">
-          <PageHeader>
+          <PageHeader style={{"margin": "2px"}}>
             Cases
             <DropdownButton onSelect={(e) => this.handleSelect(e)} style={{"margin": "10px"}} bsStyle={"info"} title={this.state.view}  >
               <MenuItem eventKey="You">You</MenuItem>
@@ -66,6 +65,7 @@ export default class Dashboard extends Component{
             <th>Victim</th>
             <th>Location</th>
             <th>Status</th>
+            <th></th>
           </tr>
           </thead>
           <CaseData cases={this.state.cases} />
@@ -95,17 +95,21 @@ export class CaseData extends Component{
     this.state.cases[newCase.id] = newCase;
     this.setState({cases: this.state.cases});
   }
+  deleteCase(id){
+    this.state.cases.splice(id, 1);
+    this.setState({cases: this.state.cases});
+  }
   componentWillReceiveProps(newProps) {
     this.setState({cases: newProps.cases});
   }
   render(){
     let cases = this.state.cases;
     let update = (c) => this.updateCase(c);
-    let add = (c) => this.addCase(c);
+    let deleteCase = (c) => this.deleteCase(c);
     return(
       <tbody>
       {cases.map((_case, i) => {
-        return <CaseRow key={i} id={i} {... _case} update={update} />
+        return <CaseRow key={i} id={i} {... _case} deleteCase={deleteCase} update={update} />
       })}
       </tbody>
     );

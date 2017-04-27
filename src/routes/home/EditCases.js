@@ -139,16 +139,69 @@ export const AddNewCaseButton = React.createClass({
         <OverlayTrigger placement="left" overlay={
           <Tooltip id="tooltip"><strong>Add new case</strong></Tooltip>}>
           <Button bsStyle="success" onClick={()=>this.setState({ lgShow: true })}>
-
             <span className="glyphicon glyphicon-plus"></span>
           </Button>
         </OverlayTrigger>
-
         <SimpleCaseModal {... this.props} show={this.state.lgShow} new={true} onHide={lgClose} />
       </div>
     );
   }
 });
+
+export const DeleteCaseModal = React.createClass({
+  getInitialState() {
+    return {
+      caseNumber: this.props.caseNumber
+    };
+  },
+  onDelete(){
+    this.props.onHide();
+    this.props.deleteCase(this.props.id);
+  },
+  onClose(){
+    this.props.onHide();
+  },
+  render() {
+    return (
+      <Modal {...this.props} bsSize="small" aria-labelledby="contained-modal-title-lg">
+        <Modal.Body>
+          Are you sure you want to delete this case ({this.state.caseNumber})?
+        </Modal.Body>
+        <Modal.Footer>
+            <Button bsStyle="danger" onClick={() => this.onClose()}>Cancel</Button>
+            <Button bsStyle="success" onClick={() => this.onDelete()}>Delete</Button>
+        </Modal.Footer>
+      </Modal>
+    );
+  }
+});
+
+export const DeleteCaseButton = React.createClass({
+  getInitialState() {
+    return {
+      lgShow: false,
+      new: true
+    };
+  },
+  render() {
+    let lgClose = () => this.setState({ lgShow: false });
+
+    return (
+      <div style={{'display':'inline-block'}}>
+        <OverlayTrigger placement="left" overlay={
+          <Tooltip id="tooltip"><strong>Delete case</strong></Tooltip>}>
+          <Button bsStyle="danger" onClick={()=>this.setState({ lgShow: true })}>
+
+            <span className="glyphicon glyphicon-minus-sign"></span>
+          </Button>
+        </OverlayTrigger>
+
+        <DeleteCaseModal {... this.props} show={this.state.lgShow} onHide={lgClose} />
+      </div>
+    );
+  }
+});
+
 
 export const CaseRow = React.createClass({
   getInitialState() {
@@ -161,171 +214,17 @@ export const CaseRow = React.createClass({
     let lgClose = () => this.setState({ lgShow: false });
 
     return (
-      <tr onClick={()=>this.setState({ lgShow: true })}>
-        <td>{this.props.caseNumber}</td>
-        <td>{this.props.crime}</td>
-        <td>{this.props.suspect}</td>
-        <td>{this.props.victim}</td>
-        <td>{this.props.location}</td>
-        <td>{this.props.status}</td>
+      <tr>
+        <td onClick={()=>this.setState({ lgShow: true })}>{this.props.caseNumber}</td>
+        <td onClick={()=>this.setState({ lgShow: true })}>{this.props.crime}</td>
+        <td onClick={()=>this.setState({ lgShow: true })}>{this.props.suspect}</td>
+        <td onClick={()=>this.setState({ lgShow: true })}>{this.props.victim}</td>
+        <td onClick={()=>this.setState({ lgShow: true })}>{this.props.location}</td>
+        <td onClick={()=>this.setState({ lgShow: true })}>{this.props.status}</td>
+        <td><DeleteCaseButton {... this.props}/></td>
         {/*<td><span className={"glyphicon glyphicon-" + this.props.status}></span> </td>*/}
         <SimpleCaseModal {... this.props} show={this.state.lgShow} onHide={lgClose} />
       </tr>
-    );
-  }
-});
-
-//modal tailored to Monterey County Sheriff's Department
-export const CaseModal = React.createClass({
-  render() {
-    return (
-      <Modal {...this.props} bsSize="large" aria-labelledby="contained-modal-title-lg">
-        <Modal.Body>
-          <div className="panel-body">
-            <div className="row">
-              <div className="col-lg-6">
-                <h1>Report Information</h1>
-                <div className="form-group input-group date" id="datetimepicker1">
-                  <label>Report Date:</label>
-                  <input type="date" className="form-control" name="reportDate"/>
-                </div>
-
-                <div className="form-group">
-                  <label>Case Number: </label>
-                  <input type="text" className="form-control" placeholder="Enter Case #" name="caseNumber"/>
-                </div>
-                <div className="form-group">
-                  <label>Crime: </label>
-                  <input type="text" className="form-control" placeholder="Enter Crime" name="crime"/>
-                </div>
-                <div className="form-group">
-                  <label>Location: </label>
-                  <input type="text" className="form-control" placeholder="Enter Location" name="location"/>
-                </div>
-                <div className="form-group">
-                  <label>Reporting Party: </label>
-                  <input type="text" className="form-control" placeholder="Enter Reporting Party" name="reportingParty"/>
-                </div>
-                <div className="form-group">
-                  <label>Victim: </label>
-                  <input type="text" className="form-control" placeholder="Enter Victim" name="victim"/>
-                </div>
-                <div className="form-group">
-                  <label>Suspect: </label>
-                  <input type="text" className="form-control" placeholder="Enter Suspect" name="suspect"/>
-                </div>
-                <div className="form-group">
-                  <label>Reporting Deputy: </label>
-                  <select className="form-control" name="reportingDeputy">
-                  </select>
-                </div>
-
-                <div className="form-group">
-                  <label>Checkboxes</label>
-                  <div className="checkbox">
-                    <label>
-                      <input type="checkbox" value="1" name="flaggedCase"/>Flagged Case
-                    </label>
-                  </div>
-                  <div className="checkbox">
-                    <label>
-                      <input type="checkbox" value="1"/>Ag Crime
-                    </label>
-                  </div>
-                </div>
-
-              </div>
-              <div className="col-lg-6">
-                <h1>Case Assignment Information</h1>
-                <div className="form-group">
-                  <label>Status:</label>
-                  <select className="form-control" name="status">
-                    <option value="Active" >Active</option>
-                    <option value="Warrant" >Warrant</option>
-                    <option value="Closed" >Closed</option>
-                    <option value="Suspended" >Suspended</option>
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label>Assigned To:</label>
-                  <select className="form-control" name="assignedTo">
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label>Unit:</label>
-                  <select className="form-control" name="unit">
-                    <option value="SV-SA" >DV-SA</option>
-                    <option value="Narcotics" >Narcotics </option>
-                    <option value="Persons" >Persons</option>
-                    <option value="Property" >Property </option>
-                    <option value="SED" >SED </option>
-                    <option value="MADCAT" >MADCAT </option>
-                    <option value="AG Unit" >AG Unit </option>
-                  </select>
-                </div>
-
-                <div className="form-group">
-                  <label for="disabledSelect">Assigned By</label>
-                  <select id="disabledSelect" className="form-control">
-                    <option></option>
-                  </select>
-                </div>
-
-                <div className="from-group">
-                  <label>Follow Up Date:</label>
-                  <input type="date" className="form-control" name="followUpDate"/>
-                </div>
-
-                <div className="form-group">
-                  <label>Complaint Action:</label>
-                  <select className="form-control" name="complaintAction">
-                    <option value="To DA" >To DA</option>
-                    <option value="Pending Court" >Pending Court</option>
-                    <option value="Warrant Issued" >Warrant Issued</option>
-                    <option value="Other" >Other</option>
-                  </select>
-                </div>
-
-                <div className="form-group">
-                  <label>Property:</label>
-                  <input type="checkbox" name="property" value="1"/>
-                </div>
-                <div className="form-group">
-                  <label>Evidence:</label>
-                  <input type="checkbox" name="evidence" value="1"/>
-                </div>
-
-                <h2>Siezures</h2>
-                <div className="form-group">
-                  <label>Cash:</label>
-                  <input type="checkbox" name="cash" value="1"/>
-                </div>
-                <div className="form-group">
-                  <label>Narcotics:</label>
-                  <input type="checkbox" name="narcotics" value="1"/>
-                </div>
-                <div className="form-group">
-                  <label>Weapons:</label>
-                  <input type="checkbox" name="weapons" value="1"/>
-                </div>
-              </div>
-            </div>
-
-            <div className="row">
-              <div className= "col-md-12">
-                <div className="form-group">
-                  <label>Summary</label>
-                  <textarea className="form-control" rows="4" name="summary"></textarea>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={this.props.onHide}>Close</Button>
-          <Button onClick={this.props.onHide}>Save</Button>
-        </Modal.Footer>
-      </Modal>
     );
   }
 });
