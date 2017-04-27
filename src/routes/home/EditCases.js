@@ -190,7 +190,7 @@ export const DeleteCaseButton = React.createClass({
       <div style={{'display':'inline-block'}}>
         <OverlayTrigger placement="left" overlay={
           <Tooltip id="tooltip"><strong>Delete case</strong></Tooltip>}>
-          <Button bsStyle="danger" onClick={()=>this.setState({ lgShow: true })}>
+          <Button bsSize="xsmall" bsStyle="danger" onClick={()=>this.setState({ lgShow: true })}>
 
             <span className="glyphicon glyphicon-minus-sign"></span>
           </Button>
