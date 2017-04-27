@@ -56,6 +56,10 @@ export const SimpleCaseModal = React.createClass({
     return (
       <Modal {...this.props} bsSize="large" aria-labelledby="contained-modal-title-lg">
         <Modal.Body>
+          <OverlayTrigger placement="left" overlay={
+            <Tooltip><strong>Messages</strong></Tooltip>}>
+            <span style={{"float": "right"}} className="glyphicon glyphicon-envelope"></span>
+          </OverlayTrigger>
           <div className="panel-body">
             <div className="row">
               <div className="col-lg-6">
