@@ -35,8 +35,12 @@ export const MessageIcon = React.createClass({
   getInitialState() {
     return {
       lgShow: false,
-      new: true
+      new: this.props.new
     };
+  },
+  viewMessage(){
+    this.setState({ lgShow: true });
+    this.props.view();
   },
   render() {
     let lgClose = () => this.setState({ lgShow: false });
@@ -45,11 +49,34 @@ export const MessageIcon = React.createClass({
       <span style={{"float": "right"}}>
         <OverlayTrigger placement="left" overlay={
           <Tooltip><strong>Messages</strong></Tooltip>}>
-          <span style={{"color": "red", "cursor": "pointer"}} onClick={()=>this.setState({ lgShow: true })}
+          <span style={{"color": this.props.new, "cursor": "pointer"}}
+                onClick={()=>this.viewMessage()}
                 className="glyphicon glyphicon-envelope"></span>
         </OverlayTrigger>
         <MessagesModal {... this.props} show={this.state.lgShow} onHide={lgClose} />
       </span>
+    );
+  }
+});
+
+export const Messages = React.createClass({
+  getInitialState() {
+    return {
+      lgShow: false,
+      new: true
+    };
+  },
+  componentDidMount(){
+    this.loadFromServer();
+  },
+  loadFromServer(){
+
+  },
+  render() {
+    let lgClose = () => this.setState({ lgShow: false });
+
+    return (
+      <div></div>
     );
   }
 });

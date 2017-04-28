@@ -14,7 +14,8 @@ export const SimpleCaseModal = React.createClass({
       victim: this.props.victim,
       crime: this.props.crime,
       summary: this.props.summary,
-      changed: false
+      changed: false,
+      new: "red"
     };
   },
   handleChange(e){
@@ -44,7 +45,6 @@ export const SimpleCaseModal = React.createClass({
     else{
       if (this.state.changed == true){
         this.props.update(newCase);
-
       }
     }
   },
@@ -52,11 +52,16 @@ export const SimpleCaseModal = React.createClass({
     this.props.onHide();
     this.setState(this.getInitialState());
   },
+  viewMessage(){
+    console.log("black");
+    this.setState({new: "black"});
+  },
   render() {
+    let v = () => this.viewMessage();
     return (
       <Modal {...this.props} bsSize="large" aria-labelledby="contained-modal-title-lg">
         <Modal.Body>
-          <MessageIcon {...this.props} />
+          <MessageIcon new={this.state.new} view={v} {...this.props} />
           <div className="panel-body">
             <div className="row">
               <div className="col-lg-6">
