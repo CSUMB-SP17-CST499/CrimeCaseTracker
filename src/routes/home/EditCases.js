@@ -50,10 +50,11 @@ export const SimpleCaseModal = React.createClass({
   },
   onClose(){
     this.props.onHide();
+    var mStatus = this.state.new;
     this.setState(this.getInitialState());
+    this.setState({new: mStatus});
   },
   viewMessage(){
-    console.log("black");
     this.setState({new: "black"});
   },
   render() {
