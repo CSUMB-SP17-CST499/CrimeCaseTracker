@@ -68,19 +68,32 @@ app.use(expressJwt({
 
 // Route data request
 // -----------------------------------------------------------------------------
-app.post('/casesModel', function(req, res){
-  Cases.findAll({
-    where: {
-      assignedTo: req.body.username
-    }
-  }).then(function(cases){
-    res.json({
-      cases: cases
+app.post('/query', function(req, res){
+  if(req.body.operation === 'userCases') {
+    Cases.findAll({
+      where: {
+        assignedTo: req.body.username
+      }
+    }).then(function (cases) {
+      res.json({
+        cases: cases
+      });
+    }).catch(function (err) {
+      console.log(err);
+      return res.status(401);
     });
-  }).catch(function(err){
-    console.log(err);
-    return res.status(401);
-  });
+  } else {
+    
+    sequelize.query(req.body.table, {
+      type: sequelize.QueryTypes.SELECT
+    }).then(function(data){
+      res.json({
+        data: data,
+      });
+    }).catch(function (err) {
+      return res.status(401);
+    });
+  }
 });
 
 //

@@ -1,6 +1,6 @@
 import fetch from '../core/fetch';
 
-module.exports = async function getUserCases(user){
+export async function getUserCases(user){
   return fetch('/query', {
     method: 'POST',
     headers: {
@@ -22,7 +22,7 @@ module.exports = async function getUserCases(user){
     })
 };
 
-module.exports = async function getAllFromTable(table){
+export async function getAllFromTable(table){
   table = "SELECT * FROM `" + table + "`";
   return fetch('/query', {
     method: 'POST',
