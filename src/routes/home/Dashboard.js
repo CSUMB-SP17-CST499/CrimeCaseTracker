@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, ButtonToolbar, Table, PageHeader } from 'react-bootstrap';
 import { AddNewCaseButton, CaseRow } from './EditCases.js';
-import getUserCases from '../../../src/public/fetchDB';
+import { getUserCases, getAllFromTable } from '../../../src/public/fetchDB';
 
 export default class Dashboard extends Component{
   constructor() {
