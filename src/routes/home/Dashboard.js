@@ -45,7 +45,8 @@ export default class Dashboard extends Component{
         <div className="col-lg-12">
           <PageHeader style={{"margin": "2px"}}>
             Cases
-            <DropdownButton onSelect={(e) => this.handleSelect(e)} style={{"margin": "10px"}} bsStyle={"info"} title={this.state.view}  >
+            <DropdownButton onSelect={(e) => this.handleSelect(e)}
+                            style={{"margin": "10px"}} bsStyle={"info"} title={this.state.view}  >
               <MenuItem eventKey="You">You</MenuItem>
               <MenuItem divider />
               <MenuItem eventKey="Closed">Closed</MenuItem>
@@ -127,9 +128,20 @@ class CaseSearchBox extends Component{
     for (i = 0; i < tr.length; i++) {
       td[0] = tr[i].getElementsByTagName("td")[0];
       td[1] = tr[i].getElementsByTagName("td")[1];
-      if (td[0] || td[1]) {
-        if (td[0].innerHTML.toUpperCase().indexOf(filter) > -1
-          || td[1].innerHTML.toUpperCase().indexOf(filter) > -1) {
+      td[2] = tr[i].getElementsByTagName("td")[2];
+      td[3] = tr[i].getElementsByTagName("td")[3];
+      td[4] = tr[i].getElementsByTagName("td")[4];
+      td[5] = tr[i].getElementsByTagName("td")[5];
+      if (td[0] || td[1] || td[2] || td[3] || td[4] || td[5]) {
+        if (
+          td[0].innerHTML.toUpperCase().indexOf(filter) > -1 ||
+          td[1].innerHTML.toUpperCase().indexOf(filter) > -1 ||
+          td[2].innerHTML.toUpperCase().indexOf(filter) > -1 ||
+          td[3].innerHTML.toUpperCase().indexOf(filter) > -1 ||
+          td[4].innerHTML.toUpperCase().indexOf(filter) > -1 ||
+          td[5].innerHTML.toUpperCase().indexOf(filter) > -1
+        )
+          {
           tr[i].style.display = "";
         } else {
           tr[i].style.display = "none";

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Modal, ButtonToolbar, OverlayTrigger, Tooltip } from 'react-bootstrap';
-import ReactDOM from 'react-dom';
+import { MessagesModal, MessageIcon } from './Message';
 
 export const SimpleCaseModal = React.createClass({
   getInitialState() {
@@ -14,7 +14,8 @@ export const SimpleCaseModal = React.createClass({
       victim: this.props.victim,
       crime: this.props.crime,
       summary: this.props.summary,
-      changed: false
+      changed: false,
+      new: "red"
     };
   },
   handleChange(e){
@@ -44,7 +45,6 @@ export const SimpleCaseModal = React.createClass({
     else{
       if (this.state.changed == true){
         this.props.update(newCase);
-
       }
     }
   },
@@ -52,10 +52,16 @@ export const SimpleCaseModal = React.createClass({
     this.props.onHide();
     this.setState(this.getInitialState());
   },
+  viewMessage(){
+    console.log("black");
+    this.setState({new: "black"});
+  },
   render() {
+    let v = () => this.viewMessage();
     return (
       <Modal {...this.props} bsSize="large" aria-labelledby="contained-modal-title-lg">
         <Modal.Body>
+          <MessageIcon new={this.state.new} view={v} {...this.props} />
           <div className="panel-body">
             <div className="row">
               <div className="col-lg-6">
@@ -115,14 +121,6 @@ export const SimpleCaseModal = React.createClass({
     );
   }
 });
-
-export const ExitAndSave = (
-  <Tooltip id="tooltip">Exit <strong>AND SAVE</strong>.</Tooltip>
-);
-
-export const ExitWITHOUTSave = (
-  <Tooltip id="tooltip">Exit <strong>WITHOUT</strong> saving.</Tooltip>
-);
 
 export const AddNewCaseButton = React.createClass({
   getInitialState() {
@@ -190,7 +188,7 @@ export const DeleteCaseButton = React.createClass({
       <div style={{'display':'inline-block'}}>
         <OverlayTrigger placement="left" overlay={
           <Tooltip id="tooltip"><strong>Delete case</strong></Tooltip>}>
-          <Button bsStyle="danger" onClick={()=>this.setState({ lgShow: true })}>
+          <Button bsSize="xsmall" bsStyle="danger" onClick={()=>this.setState({ lgShow: true })}>
 
             <span className="glyphicon glyphicon-minus-sign"></span>
           </Button>
@@ -201,7 +199,6 @@ export const DeleteCaseButton = React.createClass({
     );
   }
 });
-
 
 export const CaseRow = React.createClass({
   getInitialState() {
@@ -228,3 +225,11 @@ export const CaseRow = React.createClass({
     );
   }
 });
+
+export const ExitAndSave = (
+  <Tooltip id="tooltip">Exit <strong>AND SAVE</strong>.</Tooltip>
+);
+
+export const ExitWITHOUTSave = (
+  <Tooltip id="tooltip">Exit <strong>WITHOUT</strong> saving.</Tooltip>
+);
