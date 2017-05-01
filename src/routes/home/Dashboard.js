@@ -45,18 +45,20 @@ export default class Dashboard extends Component{
         <div className="col-lg-12">
           <PageHeader style={{"margin": "2px"}}>
             Cases
-            <DropdownButton onSelect={(e) => this.handleSelect(e)}
-                            style={{"margin": "10px"}} bsStyle={"info"} title={this.state.view}  >
-              <MenuItem eventKey="You">You</MenuItem>
-              <MenuItem divider />
-              <MenuItem eventKey="Closed">Closed</MenuItem>
-              <MenuItem eventKey="All">All</MenuItem>
-            </DropdownButton>
           </PageHeader>
 
         </div>
         <CaseSearchBox id="myTable" />
         <AddNewCaseButton add={add} />
+
+        <DropdownButton onSelect={(e) => this.handleSelect(e)}
+                        style={{"margin": "10px"}} bsStyle={"info"} title={this.state.view}  >
+          <MenuItem eventKey="You">You</MenuItem>
+          <MenuItem divider />
+          <MenuItem eventKey="Closed">Closed</MenuItem>
+          <MenuItem eventKey="All">All</MenuItem>
+        </DropdownButton>
+
         <Table striped bordered condensed hover id="myTable">
           <thead>
           <tr>
