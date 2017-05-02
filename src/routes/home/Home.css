@@ -34,6 +34,13 @@ input[type=text]{
 input[type=checkbox]{
   margin: 3px;
 }
+input[type=checkbox]{
+  margin: 3px;
+}
 tr{
   cursor: pointer;
+}
+
+select{
+  margin: 8px;
 }
