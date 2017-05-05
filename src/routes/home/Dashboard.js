@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, ButtonToolbar, Table, PageHeader, DropdownButton, MenuItem } from 'react-bootstrap';
 import { AddNewCaseButton, CaseRow } from './EditCases.js';
 import getUserCases from '../../../src/public/fetchDB';
+import getCasesByStatus from '../../../src/public/fetchDB';
 
 export default class Dashboard extends Component{
   constructor() {
@@ -46,7 +47,8 @@ export default class Dashboard extends Component{
           <PageHeader style={{"margin": "2px"}}>
             Cases
             <DropdownButton onSelect={(e) => this.handleSelect(e)}
-                            style={{"margin": "10px"}} bsStyle={"info"} title={this.state.view}  >
+                            style={{"margin": "10px"}} bsStyle={"info"}
+                            title={this.state.view}  >
               <MenuItem eventKey="You">You</MenuItem>
               <MenuItem divider />
               <MenuItem eventKey="Closed">Closed</MenuItem>
@@ -117,6 +119,7 @@ export class CaseData extends Component{
   }
 }
 
+//could be written with less code
 class CaseSearchBox extends Component{
   autoSearch(){
     var input, filter, table, tr, td, i;

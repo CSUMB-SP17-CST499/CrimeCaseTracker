@@ -45,11 +45,12 @@ export const MessageIcon = React.createClass({
   render() {
     let lgClose = () => this.setState({ lgShow: false });
 
+    //change color to this.props.new to change color based on new message
     return (
       <span style={{"float": "right"}}>
         <OverlayTrigger placement="left" overlay={
           <Tooltip><strong>Messages</strong></Tooltip>}>
-          <span style={{"color": this.props.new, "cursor": "pointer"}}
+          <span style={{"color": "black", "cursor": "pointer"}}
                 onClick={()=>this.viewMessage()}
                 className="glyphicon glyphicon-envelope"></span>
         </OverlayTrigger>
