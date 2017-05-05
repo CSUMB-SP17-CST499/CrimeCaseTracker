@@ -100,7 +100,7 @@ export const SimpleCaseModal = React.createClass({
             <div className="row">
               <div className="col-md-12">
                 <div className="form-group"><label>Summary</label>
-                  <textarea onChange={this.handleChange} defaultValue={this.state.summary} className="form-control" rows="2" name="summary"></textarea></div>
+                  <textarea onChange={this.handleChange} defaultValue={this.state.summary} className="form-control" rows="3" name="summary"></textarea></div>
               </div>
             </div>
             <div className="row">

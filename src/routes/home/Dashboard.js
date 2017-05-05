@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Button, ButtonToolbar, Table, PageHeader, DropdownButton, MenuItem } from 'react-bootstrap';
 import { AddNewCaseButton, CaseRow } from './EditCases.js';
-import getUserCases from '../../../src/public/fetchDB';
-import getCasesByStatus from '../../../src/public/fetchDB';
+import { queryByTableAndUser, getAllFromTable, getUserCases } from '../../../src/public/fetchDB';
+
 
 export default class Dashboard extends Component{
   constructor() {
@@ -22,7 +22,23 @@ export default class Dashboard extends Component{
     });
   }
   handleSelect(e){
-    this.setState({view: e});
+    if (e != this.state.view){
+      this.setState({view: e});
+      if (e == "All"){
+        console.log("All");
+        getAllFromTable('case').then((cases) => {
+          console.log(cases);
+          this.setState({cases: cases});
+        });
+      }
+      else if(e == "You"){
+        console.log("You");
+        getUserCases('dude').then((cases) => {
+          console.log(cases);
+          this.setState({cases: cases});
+        });
+      }
+    }
     //console.log("state: " + this.state.view);
   }
   addCase(newCase){
@@ -46,30 +62,18 @@ export default class Dashboard extends Component{
         <div className="col-lg-12">
           <PageHeader style={{"margin": "2px"}}>
             Cases
-<<<<<<< HEAD
             <DropdownButton onSelect={(e) => this.handleSelect(e)}
                             style={{"margin": "10px"}} bsStyle={"info"}
                             title={this.state.view}  >
               <MenuItem eventKey="You">You</MenuItem>
               <MenuItem divider />
-              <MenuItem eventKey="Closed">Closed</MenuItem>
               <MenuItem eventKey="All">All</MenuItem>
             </DropdownButton>
-=======
->>>>>>> 3edc3895673be64f30386e27c89794f024ad2037
           </PageHeader>
 
         </div>
         <CaseSearchBox id="myTable" />
         <AddNewCaseButton add={add} />
-
-        <DropdownButton onSelect={(e) => this.handleSelect(e)}
-                        style={{"margin": "10px"}} bsStyle={"info"} title={this.state.view}  >
-          <MenuItem eventKey="You">You</MenuItem>
-          <MenuItem divider />
-          <MenuItem eventKey="Closed">Closed</MenuItem>
-          <MenuItem eventKey="All">All</MenuItem>
-        </DropdownButton>
 
         <Table striped bordered condensed hover id="myTable">
           <thead>
@@ -131,7 +135,6 @@ export class CaseData extends Component{
   }
 }
 
-//could be written with less code
 class CaseSearchBox extends Component{
   autoSearch(){
     var input, filter, table, tr, td, i;
