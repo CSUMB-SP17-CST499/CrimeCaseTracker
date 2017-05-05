@@ -60,8 +60,8 @@ export const SimpleCaseModal = React.createClass({
   render() {
     let v = () => this.viewMessage();
     return (
-      <Modal {...this.props} bsSize="large" aria-labelledby="contained-modal-title-lg">
-        <Modal.Body>
+      <Modal style={{"padding-bottom": "2px"}} {...this.props} bsSize="large" aria-labelledby="contained-modal-title-lg">
+        <Modal.Body style={{"padding-bottom": "2px"}}>
           <MessageIcon new={this.state.new} view={v} {...this.props} />
           <div className="panel-body">
             <div className="row">
@@ -110,7 +110,7 @@ export const SimpleCaseModal = React.createClass({
             </div>
           </div>
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer style={{"padding": "6px"}}>
           <OverlayTrigger placement="top" overlay={ExitWITHOUTSave}>
             <Button bsStyle="danger" onClick={() => this.onClose()}>Close</Button>
           </OverlayTrigger>
