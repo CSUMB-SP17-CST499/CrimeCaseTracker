@@ -26,23 +26,8 @@ class Sidebar extends Component {
               </a>
             </li>
             <li>
-              <a href="" onClick={(e) => { e.preventDefault(); history.push('/addCase'); }}>
-                <i className="fa fa-edit fa-fw" /> &nbsp;New Case</a>
-            </li>
-            <li>
-              <a href="#"><i className="fa fa-bar-chart-o fa-fw" /> Analytics & Reports<span className="fa arrow" ></span></a>
-              <ul className="nav nav-second-level">
-                <li>
-                  <a href="" onClick={(e) => { e.preventDefault(); history.push('/reports'); }}>Request Reports</a>
-                </li>
-                <li>
-                  <a href="" onClick={(e) => { e.preventDefault(); history.push('/heatmaps'); }}>Heatmaps</a>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a href="" onClick={(e) => { e.preventDefault(); history.push('/advancedSearch'); }}>
-                <i className="fa fa-search fa-fw" /> &nbsp;Advanced Search</a>
+              <a href="#"><i className="fa fa-bar-chart-o fa-fw" /> Analytics & Reports</a>
+
             </li>
             <li>
               <a href="" onClick={(e) => { e.preventDefault(); history.push('/feedback'); }}>
