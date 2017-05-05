@@ -5,6 +5,60 @@ import { queryByTableAndUser, getAllFromTable, getUserCases } from '../../../src
 
 
 export default class Dashboard extends Component{
+  sortTable(n) {
+    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    table = document.getElementById("myTable");
+    switching = true;
+    //Set the sorting direction to ascending:
+    dir = "asc";
+    /*Make a loop that will continue until
+     no switching has been done:*/
+    while (switching) {
+      //start by saying: no switching is done:
+      switching = false;
+      rows = table.getElementsByTagName("tr");
+      /*Loop through all table rows (except the
+       first, which contains table headers):*/
+      for (i = 1; i < (rows.length - 1); i++) {
+        //start by saying there should be no switching:
+        shouldSwitch = false;
+        /*Get the two elements you want to compare,
+         one from current row and one from the next:*/
+        x = rows[i].getElementsByTagName("td")[n];
+        y = rows[i + 1].getElementsByTagName("td")[n];
+        /*check if the two rows should switch place,
+         based on the direction, asc or desc:*/
+        if (dir == "asc") {
+          if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+            //if so, mark as a switch and break the loop:
+            shouldSwitch= true;
+            break;
+          }
+        } else if (dir == "desc") {
+          if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+            //if so, mark as a switch and break the loop:
+            shouldSwitch= true;
+            break;
+          }
+        }
+      }
+      if (shouldSwitch) {
+        /*If a switch has been marked, make the switch
+         and mark that a switch has been done:*/
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+        //Each time a switch is done, increase this count by 1:
+        switchcount ++;
+      } else {
+        /*If no switching has been done AND the direction is "asc",
+         set the direction to "desc" and run the while loop again.*/
+        if (switchcount == 0 && dir == "asc") {
+          dir = "desc";
+          switching = true;
+        }
+      }
+    }
+  }
   constructor() {
     super()
     this.state = {
@@ -78,12 +132,12 @@ export default class Dashboard extends Component{
         <Table striped bordered condensed hover id="myTable">
           <thead>
           <tr>
-            <th>Case Number</th>
-            <th>Crime</th>
-            <th>Suspect</th>
-            <th>Victim</th>
-            <th>Location</th>
-            <th>Status</th>
+            <CaseHeader text="ID" col={0} />
+            <CaseHeader text="Crime" col={1} />
+            <CaseHeader text="Suspect" col={2} />
+            <CaseHeader text="Victim" col={3} />
+            <CaseHeader text="Location" col={4} />
+            <CaseHeader text="Status" col={5} />
             <th></th>
           </tr>
           </thead>
@@ -171,6 +225,72 @@ class CaseSearchBox extends Component{
   render(){
     return (
       <input type="text" id="myInput" onKeyUp={() => this.autoSearch()} placeholder="Search..." />
+    );
+  }
+}
+
+class CaseHeader extends Component{
+
+  sortTable(n) {
+    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    table = document.getElementById("myTable");
+    switching = true;
+    //Set the sorting direction to ascending:
+    dir = "asc";
+    /*Make a loop that will continue until
+     no switching has been done:*/
+    while (switching) {
+      //start by saying: no switching is done:
+      switching = false;
+      rows = table.getElementsByTagName("tr");
+      /*Loop through all table rows (except the
+       first, which contains table headers):*/
+      for (i = 1; i < (rows.length - 1); i++) {
+        //start by saying there should be no switching:
+        shouldSwitch = false;
+        /*Get the two elements you want to compare,
+         one from current row and one from the next:*/
+        x = rows[i].getElementsByTagName("td")[n];
+        y = rows[i + 1].getElementsByTagName("td")[n];
+        /*check if the two rows should switch place,
+         based on the direction, asc or desc:*/
+        if (dir == "asc") {
+          if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+            //if so, mark as a switch and break the loop:
+            shouldSwitch= true;
+            break;
+          }
+        } else if (dir == "desc") {
+          if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+            //if so, mark as a switch and break the loop:
+            shouldSwitch= true;
+            break;
+          }
+        }
+      }
+      if (shouldSwitch) {
+        /*If a switch has been marked, make the switch
+         and mark that a switch has been done:*/
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+        //Each time a switch is done, increase this count by 1:
+        switchcount ++;
+      } else {
+        /*If no switching has been done AND the direction is "asc",
+         set the direction to "desc" and run the while loop again.*/
+        if (switchcount == 0 && dir == "asc") {
+          dir = "desc";
+          switching = true;
+        }
+      }
+    }
+  }
+  render(){
+    return (
+      <th onClick={() => this.sortTable(this.props.col)}>
+        {this.props.text}
+        <i className="fa fa-fw fa-sort"></i>
+      </th>
     );
   }
 }
