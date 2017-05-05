@@ -46,6 +46,7 @@ export default class Dashboard extends Component{
         <div className="col-lg-12">
           <PageHeader style={{"margin": "2px"}}>
             Cases
+<<<<<<< HEAD
             <DropdownButton onSelect={(e) => this.handleSelect(e)}
                             style={{"margin": "10px"}} bsStyle={"info"}
                             title={this.state.view}  >
@@ -54,11 +55,22 @@ export default class Dashboard extends Component{
               <MenuItem eventKey="Closed">Closed</MenuItem>
               <MenuItem eventKey="All">All</MenuItem>
             </DropdownButton>
+=======
+>>>>>>> 3edc3895673be64f30386e27c89794f024ad2037
           </PageHeader>
 
         </div>
         <CaseSearchBox id="myTable" />
         <AddNewCaseButton add={add} />
+
+        <DropdownButton onSelect={(e) => this.handleSelect(e)}
+                        style={{"margin": "10px"}} bsStyle={"info"} title={this.state.view}  >
+          <MenuItem eventKey="You">You</MenuItem>
+          <MenuItem divider />
+          <MenuItem eventKey="Closed">Closed</MenuItem>
+          <MenuItem eventKey="All">All</MenuItem>
+        </DropdownButton>
+
         <Table striped bordered condensed hover id="myTable">
           <thead>
           <tr>
