@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Button, Modal, ButtonToolbar, OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { MessagesModal, MessageIcon } from './Message';
+import { MessageIcon } from './Message';
+import { query, getCommentsByID } from '../../../src/public/fetchDB';
+
 
 export const SimpleCaseModal = React.createClass({
   getInitialState() {
@@ -60,7 +62,7 @@ export const SimpleCaseModal = React.createClass({
   render() {
     let v = () => this.viewMessage();
     return (
-      <Modal style={{"padding-bottom": "2px"}} {...this.props} bsSize="large" aria-labelledby="contained-modal-title-lg">
+      <Modal style={{"paddingBottom": "2px"}} {...this.props} bsSize="large" aria-labelledby="contained-modal-title-lg">
         <Modal.Body style={{"padding-bottom": "2px"}}>
           <MessageIcon new={this.state.new} view={v} {...this.props} />
           <div className="panel-body">
@@ -204,6 +206,23 @@ export const DeleteCaseButton = React.createClass({
 export const CaseRow = React.createClass({
   getInitialState() {
     return {
+      messages: []
+    };
+  },
+  loadMessages(){
+    //console.log(this.props.caseNumber);
+    //query("SELECT * FROM comments WHERE caseNumber = '" + this.props.caseNumber + "'").
+    getCommentsByID(this.props.caseNumber).
+    then((messages) => {
+      console.log(messages);
+      this.setState({messages: messages});
+    });
+  },
+  componentDidMount(){
+    this.loadMessages();
+  },
+  getInitialState() {
+    return {
       lgShow: false,
       new: false
     };
@@ -221,7 +240,7 @@ export const CaseRow = React.createClass({
         <td onClick={()=>this.setState({ lgShow: true })}>{this.props.status}</td>
         <td><DeleteCaseButton {... this.props}/></td>
         {/*<td><span className={"glyphicon glyphicon-" + this.props.status}></span> </td>*/}
-        <SimpleCaseModal {... this.props} show={this.state.lgShow} onHide={lgClose} />
+        <SimpleCaseModal messages={this.state.messages} {... this.props} show={this.state.lgShow} onHide={lgClose} />
       </tr>
     );
   }

@@ -5,23 +5,22 @@ import React, { Component } from 'react';
 import { Button, Modal, ButtonToolbar, OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 export const MessagesModal = React.createClass({
-  getInitialState() {
-    return {
-      caseNumber: this.props.caseNumber
-    };
-  },
-  onDelete(){
-    this.props.onHide();
-    this.props.deleteCase(this.props.id);
-  },
   onClose(){
     this.props.onHide();
   },
   render() {
+    let messages = this.props.messages;
+    console.log(this.props.messages[0].comment);
     return (
       <Modal {...this.props} bsSize="small" aria-labelledby="contained-modal-title-lg">
+        <Modal.Header>
+          Messages ({this.props.caseNumber})
+        </Modal.Header>
+
         <Modal.Body>
-          Messages ({this.state.caseNumber})
+          {messages.map((message, i) => {
+            return <Message key={i} id={i} {... message} />
+          })}
         </Modal.Body>
         <Modal.Footer>
           <Button bsStyle="success" onClick={() => this.onClose()}>OK</Button>
@@ -67,17 +66,25 @@ export const Messages = React.createClass({
       new: true
     };
   },
-  componentDidMount(){
-    this.loadFromServer();
-  },
-  loadFromServer(){
-
-  },
   render() {
     let lgClose = () => this.setState({ lgShow: false });
-
     return (
       <div></div>
+    );
+  }
+});
+
+export const Message = React.createClass({
+  render() {
+    return (
+      <div>
+        <b>{this.props.comment}</b>
+        <br />
+        <i>{new Date(this.props.commentDate).toLocaleDateString() +
+        " (" + new Date(this.props.commentDate).toLocaleTimeString() + ")" }
+        </i>
+        <hr />
+      </div>
     );
   }
 });

@@ -26,7 +26,9 @@ class Sidebar extends Component {
               </a>
             </li>
             <li>
-              <a href="#"><i className="fa fa-bar-chart-o fa-fw" /> Analytics & Reports</a>
+              <a href=""
+                onClick={(e) => { e.preventDefault(); history.push('/reports'); }}>
+                <i className="fa fa-bar-chart-o fa-fw" /> Analytics & Reports</a>
 
             </li>
             <li>
