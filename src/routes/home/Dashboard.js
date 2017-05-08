@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, ButtonToolbar, Table, PageHeader, DropdownButton, MenuItem } from 'react-bootstrap';
 import { AddNewCaseButton, CaseRow } from './EditCases.js';
-import { queryByTableAndUser, getAllFromTable, getUserCases } from '../../../src/public/fetchDB';
+import { getAllFromTable, getUserCases } from '../../../src/public/fetchDB';
 
 
 export default class Dashboard extends Component{
@@ -26,21 +26,18 @@ export default class Dashboard extends Component{
     if (e != this.state.view){
       this.setState({view: e});
       if (e == "All"){
-        console.log("All");
         getAllFromTable('case').then((cases) => {
           console.log(cases);
           this.setState({cases: cases});
         });
       }
       else if(e == "You"){
-        console.log("You");
         getUserCases('dude').then((cases) => {
           console.log(cases);
           this.setState({cases: cases});
         });
       }
     }
-    //console.log("state: " + this.state.view);
   }
   addCase(newCase){
     //new case will have last used id + 1, will be changed when "actual" IDs are added

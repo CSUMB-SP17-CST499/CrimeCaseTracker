@@ -33,30 +33,35 @@ export default class GenerateReports extends Component{
   constructor() {
     super()
     this.state = {
-      cases:[]
+      cases:[],
+      crimes: []
     }
-  }
-  componentWillMount(){
-    var plotScript = document.createElement('script');
-    plotScript.setAttribute('src','https://cdn.plot.ly/plotly-latest.min.js');
-    document.head.appendChild(plotScript);
-
   }
   componentDidMount(){
     getAllFromTable('Casetrack').then((cases) => {
       console.log(cases);
       this.setState({cases: cases});
+      console.log(this.state.cases.length);
     });
 
-    console.log("hello");
     var obj = { };
+
+    for (var i in this.state.cases){
+      //this.state.crimes.push(cases[i].Crime.toUpperCase());
+      console.log(this.state.cases[i].Crime.toUpperCase());
+      console.log("hello");
+    }
+
+    this.setState({crimes: this.state.crimes});
+
+    console.log("crimes: ");
+    console.log(this.state.crimes);
+
     for (var i = 0; i < this.state.cases.length; i++) {
       obj[arr[i]] = (obj[arr[i]] || 0) + 1;
       console.log("i:" + i);
     }
 
-    console.log("obj");
-    console.log(obj);
 
   }
   render(){

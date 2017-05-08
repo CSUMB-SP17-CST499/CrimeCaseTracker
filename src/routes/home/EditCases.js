@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Modal, ButtonToolbar, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { MessageIcon } from './Message';
-import { query, getCommentsByID } from '../../../src/public/fetchDB';
+import {  getCommentsByID } from '../../../src/public/fetchDB';
 
 
 export const SimpleCaseModal = React.createClass({
@@ -21,7 +21,6 @@ export const SimpleCaseModal = React.createClass({
     };
   },
   handleChange(e){
-    console.log("flag changed");
     this.setState({changed: true});
     this.setState({[e.target.name]: e.target.value})
   },
@@ -64,7 +63,7 @@ export const SimpleCaseModal = React.createClass({
     return (
       <Modal style={{"paddingBottom": "2px"}} {...this.props} bsSize="large" aria-labelledby="contained-modal-title-lg">
         <Modal.Body style={{"padding-bottom": "2px"}}>
-          <MessageIcon new={this.state.new} view={v} {...this.props} />
+          <MessageIcon hideMessages={this.props.new} new={this.state.new} view={v} {... this.props} />
           <div className="panel-body">
             <div className="row">
               <div className="col-lg-6">
@@ -169,8 +168,8 @@ export const DeleteCaseModal = React.createClass({
           Are you sure you want to delete this case ({this.state.caseNumber})?
         </Modal.Body>
         <Modal.Footer>
-            <Button bsStyle="danger" onClick={() => this.onClose()}>Cancel</Button>
-            <Button bsStyle="success" onClick={() => this.onDelete()}>Delete</Button>
+            <Button bsStyle="success" onClick={() => this.onClose()}>Cancel</Button>
+            <Button bsStyle="danger" onClick={() => this.onDelete()}>Delete</Button>
         </Modal.Footer>
       </Modal>
     );
@@ -210,11 +209,10 @@ export const CaseRow = React.createClass({
     };
   },
   loadMessages(){
-    //console.log(this.props.caseNumber);
     //query("SELECT * FROM comments WHERE caseNumber = '" + this.props.caseNumber + "'").
     getCommentsByID(this.props.caseNumber).
     then((messages) => {
-      console.log(messages);
+      //console.log(messages);
       this.setState({messages: messages});
     });
   },

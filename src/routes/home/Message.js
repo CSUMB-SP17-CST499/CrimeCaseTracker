@@ -10,7 +10,6 @@ export const MessagesModal = React.createClass({
   },
   render() {
     let messages = this.props.messages;
-    console.log(this.props.messages[0].comment);
     return (
       <Modal {...this.props} bsSize="small" aria-labelledby="contained-modal-title-lg">
         <Modal.Header>
@@ -18,9 +17,11 @@ export const MessagesModal = React.createClass({
         </Modal.Header>
 
         <Modal.Body>
-          {messages.map((message, i) => {
-            return <Message key={i} id={i} {... message} />
-          })}
+          {
+            messages.map((message, i) => {
+              return <Message key={i} id={i} {... message} />
+            })
+          }
         </Modal.Body>
         <Modal.Footer>
           <Button bsStyle="success" onClick={() => this.onClose()}>OK</Button>
@@ -45,6 +46,10 @@ export const MessageIcon = React.createClass({
     let lgClose = () => this.setState({ lgShow: false });
 
     //change color to this.props.new to change color based on new message
+    if (this.props.hideMessages){
+      return <span></span>
+    }
+
     return (
       <span style={{"float": "right"}}>
         <OverlayTrigger placement="left" overlay={
