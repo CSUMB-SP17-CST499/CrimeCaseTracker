@@ -13,7 +13,7 @@ export const MessagesModal = React.createClass({
     return (
       <Modal {...this.props} bsSize="small" aria-labelledby="contained-modal-title-lg">
         <Modal.Header>
-          Messages ({this.props.caseNumber})
+          <h3>Messages ({this.props.caseNumber})</h3>
         </Modal.Header>
 
         <Modal.Body>
