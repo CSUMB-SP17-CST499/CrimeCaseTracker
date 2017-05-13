@@ -30,7 +30,8 @@ const SimpleBarChart = React.createClass({
       count[data[i]] = (count[data[i]] || 0) + 1;
     }
     for (var key in count) {
-      if (count[key] > 1){
+      if ((this.props.legend == "words" && count[key] > 2)
+          || this.props.legend != "words" && count[key] > 1){
         obj["name"] = key;
         obj[this.props.legend] = count[key];
         tempPlot.push(obj);
