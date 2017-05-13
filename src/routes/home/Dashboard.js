@@ -61,7 +61,7 @@ export default class Dashboard extends Component{
           <PageHeader style={{"margin": "2px"}}>
             <span>Cases</span>
             <DropdownButton onSelect={(e) => this.handleSelect(e)}
-                            style={{"margin": "10px"}}
+                            style={{"marginLeft": "15px"}}
                             bsStyle={"info"}
                             title={this.state.view}  >
               <MenuItem eventKey="You">You</MenuItem>

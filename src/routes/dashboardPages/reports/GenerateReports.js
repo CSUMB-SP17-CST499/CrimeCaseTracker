@@ -10,10 +10,6 @@ import { DropdownButton, MenuItem } from 'react-bootstrap'
 
 const colors = ['#8884d8', '#83a6ed', '#8dd1e1', '#82ca9d', '#a4de6c'];
 const SimpleBarChart = React.createClass({
-
-  componentDidMount(){
-    this.processData();
-  },
   getInitialState() {
     return {
       data: this.props.data,
@@ -22,8 +18,6 @@ const SimpleBarChart = React.createClass({
   },
   componentWillReceiveProps(newProps) {
     this.setState({data: newProps.data});
-    console.log("new data");
-    console.log(this.state.data);
     this.processData(newProps.data);
   },
   processData(newData){
@@ -36,12 +30,13 @@ const SimpleBarChart = React.createClass({
       count[data[i]] = (count[data[i]] || 0) + 1;
     }
     for (var key in count) {
-      obj["name"] = key;
-      obj[this.props.legend] = count[key];
-      tempPlot.push(obj);
-      obj = {};
+      if (count[key] > 1){
+        obj["name"] = key;
+        obj[this.props.legend] = count[key];
+        tempPlot.push(obj);
+        obj = {};
+      }
     }
-
     this.setState({plot: tempPlot});
   },
   render () {
@@ -66,8 +61,20 @@ export default class GenerateReports extends Component{
       cases:[],
       crimes: [],
       units: [],
+      statuses: [],
+      summary: [],
       year: "Year"
     }
+  }
+  cleanString(str){
+    var common = ["with", "were", "suspect", "victim", "when", "into"];
+    var commonStr = new RegExp(common.join("|"),"g");
+
+    str = str.replace(/[.,\'`~()]/g,"");
+    str = str.replace(commonStr,'');
+
+    return str;
+
   }
   handleSelect(e){
      console.log(e);
@@ -76,21 +83,36 @@ export default class GenerateReports extends Component{
   }
   loadFromServer(){
     getAllFromTable('Casetrack').then((cases) => {
-      var tempCrimes = [];
-      var tempUnits = [];
-
+      var words = [];
+      var str = ""
+      this.state.units = [];
+      this.state.crimes = [];
       for (var i in cases){
         if (cases[i]['Entry Date'].slice(-4) == this.state.year){
-          tempCrimes.push(cases[i].Crime.toUpperCase());
-          tempUnits.push(cases[i].Unit.toUpperCase());
+          this.state.crimes.push(cases[i].Crime.toUpperCase());
+          this.state.units.push(cases[i].Unit.toUpperCase());
+          this.state.statuses.push(cases[i].Status.toUpperCase());
+
+          str = this.cleanString(cases[i].Comments.toLowerCase());
+          str = str.split(" ");
+          for (var j in str){
+            if (str[j].length > 3){
+              words.push(str[j]);
+            }
+          }
         }
       }
-      this.setState({cases: cases,
-                    units: tempUnits,
-                    crimes: tempCrimes});
 
+
+      this.setState({cases: cases,
+                    units: this.state.units,
+                    crimes: this.state.crimes,
+                    statuses: this.state.statuses,
+                    summary: words});
       console.log("crimes");
       console.log(this.state.crimes);
+      // console.log("summary");
+      // console.log(this.state.summary);
     });
   }
   componentDidMount(){
@@ -101,8 +123,9 @@ export default class GenerateReports extends Component{
       <div id="myDiv">
         <div style={{"textAlign":"right"}}>
           <DropdownButton onSelect={(e) => this.handleSelect(e)}
-                          style={{"marginRight": "150px"}}
-                          bsStyle={"info"}
+                          style={{"marginRight": "150px",
+                                  "marginTop": "15px"}}
+                          bsStyle={"primary"}
                           title={this.state.year}  >
             <MenuItem eventKey="2010">2010</MenuItem>
             <MenuItem eventKey="2011">2011</MenuItem>
@@ -112,8 +135,10 @@ export default class GenerateReports extends Component{
           </DropdownButton>
         </div>
         <div style={{"margin": "20px"}}>
-          <div style={{"display":"inline-block"}}><SimpleBarChart color={"#8884d8"} legend="crimes" data={this.state.crimes}/></div>
-          <div style={{"display":"inline-block"}}><SimpleBarChart color={"#d0ed57"} legend="units" data={this.state.units}/></div>
+          <div ><SimpleBarChart color={colors[0]} legend="crime" data={this.state.crimes}/></div>
+          <div ><SimpleBarChart color={colors[1]} legend="unit" data={this.state.units}/></div>
+          <div ><SimpleBarChart color={colors[2]} legend="status" data={this.state.statuses}/></div>
+          <div ><SimpleBarChart color={colors[3]} legend="words" data={this.state.summary}/></div>
         </div>
       </div>
     );
@@ -188,3 +213,5 @@ const SimpleRadialBarChart = React.createClass({
     );
   }
 })
+
+/// who | were | her | his | but | while | him | over | tlk | when | the | be | are | to | are | no | of | and | a | in | that | have | i | it | for | not | on | with /g
