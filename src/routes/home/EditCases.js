@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Button, Modal, ButtonToolbar, OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { MessagesModal, MessageIcon } from './Message';
+import { MessageIcon } from './Message';
+import {  getCommentsByID } from '../../../src/public/fetchDB';
+
 
 export const SimpleCaseModal = React.createClass({
   getInitialState() {
@@ -19,7 +21,6 @@ export const SimpleCaseModal = React.createClass({
     };
   },
   handleChange(e){
-    console.log("flag changed");
     this.setState({changed: true});
     this.setState({[e.target.name]: e.target.value})
   },
@@ -50,18 +51,19 @@ export const SimpleCaseModal = React.createClass({
   },
   onClose(){
     this.props.onHide();
+    var mStatus = this.state.new;
     this.setState(this.getInitialState());
+    this.setState({new: mStatus});
   },
   viewMessage(){
-    console.log("black");
     this.setState({new: "black"});
   },
   render() {
     let v = () => this.viewMessage();
     return (
-      <Modal {...this.props} bsSize="large" aria-labelledby="contained-modal-title-lg">
-        <Modal.Body>
-          <MessageIcon new={this.state.new} view={v} {...this.props} />
+      <Modal style={{"paddingBottom": "2px"}} {...this.props} bsSize="large" aria-labelledby="contained-modal-title-lg">
+        <Modal.Body style={{"padding-bottom": "2px"}}>
+          <MessageIcon hideMessages={this.props.new} new={this.state.new} view={v} {... this.props} />
           <div className="panel-body">
             <div className="row">
               <div className="col-lg-6">
@@ -99,7 +101,7 @@ export const SimpleCaseModal = React.createClass({
             <div className="row">
               <div className="col-md-12">
                 <div className="form-group"><label>Summary</label>
-                  <textarea onChange={this.handleChange} defaultValue={this.state.summary} className="form-control" rows="2" name="summary"></textarea></div>
+                  <textarea onChange={this.handleChange} defaultValue={this.state.summary} className="form-control" rows="3" name="summary"></textarea></div>
               </div>
             </div>
             <div className="row">
@@ -109,7 +111,7 @@ export const SimpleCaseModal = React.createClass({
             </div>
           </div>
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer style={{"padding": "6px"}}>
           <OverlayTrigger placement="top" overlay={ExitWITHOUTSave}>
             <Button bsStyle="danger" onClick={() => this.onClose()}>Close</Button>
           </OverlayTrigger>
@@ -166,8 +168,8 @@ export const DeleteCaseModal = React.createClass({
           Are you sure you want to delete this case ({this.state.caseNumber})?
         </Modal.Body>
         <Modal.Footer>
-            <Button bsStyle="danger" onClick={() => this.onClose()}>Cancel</Button>
-            <Button bsStyle="success" onClick={() => this.onDelete()}>Delete</Button>
+            <Button bsStyle="success" onClick={() => this.onClose()}>Cancel</Button>
+            <Button bsStyle="danger" onClick={() => this.onDelete()}>Delete</Button>
         </Modal.Footer>
       </Modal>
     );
@@ -203,6 +205,22 @@ export const DeleteCaseButton = React.createClass({
 export const CaseRow = React.createClass({
   getInitialState() {
     return {
+      messages: []
+    };
+  },
+  loadMessages(){
+    //query("SELECT * FROM comments WHERE caseNumber = '" + this.props.caseNumber + "'").
+    getCommentsByID(this.props.caseNumber).
+    then((messages) => {
+      //console.log(messages);
+      this.setState({messages: messages});
+    });
+  },
+  componentDidMount(){
+    this.loadMessages();
+  },
+  getInitialState() {
+    return {
       lgShow: false,
       new: false
     };
@@ -220,7 +238,7 @@ export const CaseRow = React.createClass({
         <td onClick={()=>this.setState({ lgShow: true })}>{this.props.status}</td>
         <td><DeleteCaseButton {... this.props}/></td>
         {/*<td><span className={"glyphicon glyphicon-" + this.props.status}></span> </td>*/}
-        <SimpleCaseModal {... this.props} show={this.state.lgShow} onHide={lgClose} />
+        <SimpleCaseModal messages={this.state.messages} {... this.props} show={this.state.lgShow} onHide={lgClose} />
       </tr>
     );
   }

@@ -5,23 +5,23 @@ import React, { Component } from 'react';
 import { Button, Modal, ButtonToolbar, OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 export const MessagesModal = React.createClass({
-  getInitialState() {
-    return {
-      caseNumber: this.props.caseNumber
-    };
-  },
-  onDelete(){
-    this.props.onHide();
-    this.props.deleteCase(this.props.id);
-  },
   onClose(){
     this.props.onHide();
   },
   render() {
+    let messages = this.props.messages;
     return (
       <Modal {...this.props} bsSize="small" aria-labelledby="contained-modal-title-lg">
+        <Modal.Header>
+          <h3>Messages ({this.props.caseNumber})</h3>
+        </Modal.Header>
+
         <Modal.Body>
-          Messages ({this.state.caseNumber})
+          {
+            messages.map((message, i) => {
+              return <Message key={i} id={i} {... message} />
+            })
+          }
         </Modal.Body>
         <Modal.Footer>
           <Button bsStyle="success" onClick={() => this.onClose()}>OK</Button>
@@ -45,11 +45,16 @@ export const MessageIcon = React.createClass({
   render() {
     let lgClose = () => this.setState({ lgShow: false });
 
+    //change color to this.props.new to change color based on new message
+    if (this.props.hideMessages){
+      return <span></span>
+    }
+
     return (
       <span style={{"float": "right"}}>
         <OverlayTrigger placement="left" overlay={
           <Tooltip><strong>Messages</strong></Tooltip>}>
-          <span style={{"color": this.props.new, "cursor": "pointer"}}
+          <span style={{"color": "black", "cursor": "pointer"}}
                 onClick={()=>this.viewMessage()}
                 className="glyphicon glyphicon-envelope"></span>
         </OverlayTrigger>
@@ -66,17 +71,25 @@ export const Messages = React.createClass({
       new: true
     };
   },
-  componentDidMount(){
-    this.loadFromServer();
-  },
-  loadFromServer(){
-
-  },
   render() {
     let lgClose = () => this.setState({ lgShow: false });
-
     return (
       <div></div>
+    );
+  }
+});
+
+export const Message = React.createClass({
+  render() {
+    return (
+      <div>
+        <b>{this.props.comment}</b>
+        <br />
+        <i>{new Date(this.props.commentDate).toLocaleDateString() +
+        " (" + new Date(this.props.commentDate).toLocaleTimeString() + ")" }
+        </i>
+        <hr />
+      </div>
     );
   }
 });
