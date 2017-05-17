@@ -1,0 +1,98 @@
+---
+title: "Casetrack"
+author: "Chris Ngo"
+date: "April 23, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r Load the specific libraries}
+source("Casetrack_R.R")
+```
+
+
+```{r Selecting all data from Casetrack Table}
+myQuery = "SELECT * from `Monterey_Pub`;"
+dat = dbGetQuery(dbConn, myQuery)
+data.frame(dat)
+
+summary(dat)
+str(dat)
+```
+
+
+```{r}
+monterey = get_map(location= "monterey bay", maptype = "roadmap",scale=1, zoom = 10)
+ggmap(monterey)
+
+cities = c(dat$city)
+freq = as.data.frame(table(cities))
+freq = freq[freq$Freq > 1 & freq$cities != "UNKNOWN" & freq$cities != "SACRAMENTO" & freq$cities != "SAN JOSE" & freq$cities != "SAN FRANCISCO" & freq$cities != "CASTRO VALLEY" & freq$cities != "SALIANS" & freq$cities != "LOS PADRES FORE" & freq$cities != "PARAJO" & freq$cities != "SPRECKLES" & freq$cities != "PRUNDALE",]
+
+lonlat = geocode(as.character(freq$cities))
+cities = cbind(freq, lonlat)
+cities$lon = round(as.numeric(cities$lon), 2)
+cities$lat = round(as.numeric(cities$lat), 2)
+
+ggmap(monterey) + geom_tile(data=cities, aes(x = lon, y = lat, alpha = Freq),
+                      fill = "red") + theme(axis.title.y = element_text(), 
+                                            axis.title.x = element_text())
+```
+
+
+
+```{r Find Crimes by Keywords}
+
+```
+
+```{r}
+table(dat$`Ag Crime`[dat$`Ag Crime`=="FALSE"])
+```
+
+# Crimes... Look for crimes by area
+```{r}
+murders = dat$Crime
+table(murders)
+
+```
+
+
+```{r}
+dat1$longitude[dat1$longitude==0] = NA
+dat1$latitude[dat1$latitude==0] = NA
+
+na.omit(dat1)
+
+dat1$longitude = round(as.numeric(dat1$longitude), 2)
+dat1$latitude = round(as.numeric(dat1$latitude), 2)
+
+
+
+
+montereyCrimes = as.data.frame(table(dat1$latitude, dat1$longitude))
+
+names(montereyCrimes) = c("long", "lat", "Frequency")
+```
+
+
+
+
+```{r}
+monterey = get_map(location= "monterey bay", zoom = 8)
+ggmap(monterey)
+
+mapPoints = ggmap(monterey) + geom_point(data=dat1, aes(x=longitude, y=latitude), col="Red", 
+                                         fill="Pink",pch=21, size=5, alpha=I(0.7))
+
+
+```
+
