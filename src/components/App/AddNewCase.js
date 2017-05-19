@@ -8,7 +8,7 @@ export const MySmallModal = React.createClass({
     return (
       <Modal {...this.props} bsSize="small" aria-labelledby="contained-modal-title-sm">
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-sm">Modal heading</Modal.Title>
+    ; <Modal.Title id="contained-modal-title-sm">Modal heading</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <h4>Wrapped Text</h4>
@@ -26,7 +26,7 @@ export const MySmallModal = React.createClass({
           <Button onClick={this.props.onHide}>Close</Button>
         </Modal.Footer>
       </Modal>
-    );
+    )
   }
 });
 

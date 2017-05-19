@@ -1,0 +1,96 @@
+---
+title: "Casetrack"
+author: "Chris Ngo"
+date: "April 23, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r Load the specific libraries, include=FALSE}
+source("Casetrack_R.R")
+```
+
+
+```{r Selecting all data from Casetrack Table, include=FALSE}
+myQuery = "SELECT * from `Monterey_Pub`;"
+dat = dbGetQuery(dbConn, myQuery)
+data.frame(dat)
+
+summary(dat)
+str(dat)
+```
+
+```{r Selecting all data from Casetrack Table, include=FALSE}
+myQuery = "SELECT * from `Casetrack`;"
+dat1 = dbGetQuery(dbConn, myQuery)
+data.frame(dat1)
+
+summary(dat1)
+str(dat1)
+```
+
+This is a map plot of the Crimes based on location in Monterey County.
+```{r}
+monterey = get_map(location= "monterey bay", maptype = "roadmap",scale=1, zoom = 10)
+ggmap(monterey)
+
+cities = c(dat$city)
+freq = as.data.frame(table(cities))
+freq = freq[freq$Freq > 1 & freq$cities != "UNKNOWN" & freq$cities != "SACRAMENTO" & freq$cities != "SAN JOSE" & freq$cities != "SAN FRANCISCO" & freq$cities != "CASTRO VALLEY" & freq$cities != "SALIANS" & freq$cities != "LOS PADRES FORE" & freq$cities != "PARAJO" & freq$cities != "SPRECKLES" & freq$cities != "PRUNDALE",]
+
+lonlat = geocode(as.character(freq$cities))
+cities = cbind(freq, lonlat)
+cities$lon = round(as.numeric(cities$lon), 2)
+cities$lat = round(as.numeric(cities$lat), 2)
+
+ggmap(monterey) + geom_tile(data=cities, aes(x = lon, y = lat, alpha = Freq),
+                      fill = "red") + theme(axis.title.y = element_text(), 
+                                            axis.title.x = element_text())
+```
+
+Saturday is when most of the crimes happen, followed by Friday. Maybe it's due to more people being out on the weekend.
+```{r}
+par(mar=c(3,6,3,3))
+barplot(table(dat$day_of_week[dat$day_of_week!="null"]), horiz=TRUE, las=1, main="Crimes distributed by Days of the Week", xlab="Frequency")
+```
+
+
+Crimes sorted into 3 Categories: Battery, Theft, and Narcotics. There are more crimes in Monterey County dealing with Theft than Battery and Narcotics combined.
+```{r Find Crimes by Keywords}
+crimes = dat$incident_type_primary
+
+bat = sum(table(grep("BATTERY|ASSAULT", dat$incident_type_primary)))
+theft = sum(table(grep("GRANDTHEFT|GRNDTHFT|THEFT|BURGLARY|STOLEN|ROBBED", dat$incident_type_primary)))
+drugs = sum(table(grep("DRUGS|NARCOTICS|DUI|POSSESSION|MARIJUANA", dat$incident_type_primary)))
+
+type = c("battery", "theft", "narcotics")
+freq = c(bat, theft, drugs)
+
+crimeType = data.frame(type, freq)
+crimeType
+
+ggplot(crimeType, aes(type, freq)) + 
+  geom_bar(stat="identity", position="dodge")
+
+```
+
+The amount of Non-Agricultural Crimes
+```{r}
+table(dat1$`Ag Crime`[dat$`Ag Crime`=="FALSE"])
+```
+
+
+
+
+
+
+

@@ -51,3 +51,17 @@ $ npm run clean
 
 ### Automation tools used
 - [Webpack](https://webpack.github.io/)
+
+
+### R
+
+####1. Run the R-3.40.exe and RStudio.exe and install 
+
+####2. Once downloaded inside RStudio go to "Packages" at the bottom right and then click install and install these packages.
+
+##### - RMySQL, dbConnect, ggplot2, ggmap, dplyr, tidyr, maps, and lattice
+
+####3. Open the Casetrack_Rmd.Rmd and the Casetrack_R.R in the R folder
+
+####4. Inside the Casetrack_Rmd.Rmd, click on "Knit" and "Knit to PDF". The report should be printed in a PDF file that can be printed or saved.
+
