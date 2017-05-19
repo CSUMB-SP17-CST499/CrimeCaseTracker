@@ -15,12 +15,12 @@ This is an R Markdown document. Markdown is a simple formatting syntax for autho
 
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
-```{r Load the specific libraries}
+```{r Load the specific libraries, include=FALSE}
 source("Casetrack_R.R")
 ```
 
 
-```{r Selecting all data from Casetrack Table}
+```{r Selecting all data from Casetrack Table, include=FALSE}
 myQuery = "SELECT * from `Monterey_Pub`;"
 dat = dbGetQuery(dbConn, myQuery)
 data.frame(dat)
@@ -29,7 +29,16 @@ summary(dat)
 str(dat)
 ```
 
+```{r Selecting all data from Casetrack Table, include=FALSE}
+myQuery = "SELECT * from `Casetrack`;"
+dat1 = dbGetQuery(dbConn, myQuery)
+data.frame(dat1)
 
+summary(dat1)
+str(dat1)
+```
+
+This is a map plot of the Crimes based on location in Monterey County.
 ```{r}
 monterey = get_map(location= "monterey bay", maptype = "roadmap",scale=1, zoom = 10)
 ggmap(monterey)
@@ -48,8 +57,14 @@ ggmap(monterey) + geom_tile(data=cities, aes(x = lon, y = lat, alpha = Freq),
                                             axis.title.x = element_text())
 ```
 
+Saturday is when most of the crimes happen, followed by Friday. Maybe it's due to more people being out on the weekend.
+```{r}
+par(mar=c(3,6,3,3))
+barplot(table(dat$day_of_week[dat$day_of_week!="null"]), horiz=TRUE, las=1, main="Crimes distributed by Days of the Week", xlab="Frequency")
+```
 
 
+Crimes sorted into 3 Categories: Battery, Theft, and Narcotics. There are more crimes in Monterey County dealing with Theft than Battery and Narcotics combined.
 ```{r Find Crimes by Keywords}
 crimes = dat$incident_type_primary
 
@@ -57,7 +72,7 @@ bat = sum(table(grep("BATTERY|ASSAULT", dat$incident_type_primary)))
 theft = sum(table(grep("GRANDTHEFT|GRNDTHFT|THEFT|BURGLARY|STOLEN|ROBBED", dat$incident_type_primary)))
 drugs = sum(table(grep("DRUGS|NARCOTICS|DUI|POSSESSION|MARIJUANA", dat$incident_type_primary)))
 
-type = c("battery", "theft", "drugs")
+type = c("battery", "theft", "narcotics")
 freq = c(bat, theft, drugs)
 
 crimeType = data.frame(type, freq)
@@ -68,34 +83,14 @@ ggplot(crimeType, aes(type, freq)) +
 
 ```
 
+The amount of Non-Agricultural Crimes
 ```{r}
-table(dat$`Ag Crime`[dat$`Ag Crime`=="FALSE"])
-```
-
-# Crimes... Look for crimes by area
-```{r}
-murders = dat$Crime
-table(murders)
-
-```
-
-
-```{r}
-
-
-names(montereyCrimes) = c("long", "lat", "Frequency")
+table(dat1$`Ag Crime`[dat$`Ag Crime`=="FALSE"])
 ```
 
 
 
 
-```{r}
-monterey = get_map(location= "monterey bay", zoom = 8)
-ggmap(monterey)
-
-mapPoints = ggmap(monterey) + geom_point(data=dat1, aes(x=longitude, y=latitude), col="Red", 
-                                         fill="Pink",pch=21, size=5, alpha=I(0.7))
 
 
-```
 
